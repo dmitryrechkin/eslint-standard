@@ -118,6 +118,6 @@ console.log(greeting);
 
 ## Contributing
 
-Contributions to improve this ESLint configuration are welcome. Please feel free to open an issue or submit a pull request on our [GitHub repository](#).
+Contributions to improve this ESLint configuration are welcome. Please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/dmitryrechkin/eslint-standard).
 
 
