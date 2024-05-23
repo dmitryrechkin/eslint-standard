@@ -1,0 +1,18 @@
+{
+  "name": "@dmitryrechkin/eslint-standard",
+  "description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
+  "version": "1.0.0",
+  "main": "eslint-config.js",
+  "scripts": {
+    "postinstall": "echo 'Remember to install peer dependencies: npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --save-dev'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-unused-imports": "^3.2.0"
+  }
+}
