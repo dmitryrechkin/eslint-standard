@@ -9,7 +9,7 @@ export default function ({ tsconfigPath = './tsconfig.json' } = {}) {
 			ignores: ['node_modules/**', 'dist/**'],
 		},
 		{
-			files: ['**/*.ts'],
+			files: ['**/*.{js,jsx,ts,tsx}'],
 			languageOptions: {
 				parser: tsParser,
 				parserOptions: {
@@ -68,8 +68,8 @@ export default function ({ tsconfigPath = './tsconfig.json' } = {}) {
 				],
 
 				// unused-imports rules
-				'unused-imports/no-unused-imports-ts': 'error',
-				'unused-imports/no-unused-vars-ts': [
+				'unused-imports/no-unused-imports': 'error',
+				'unused-imports/no-unused-vars': [
 					'warn',
 					{
 						vars: 'all',
