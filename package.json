@@ -1,19 +1,19 @@
 {
-  "name": "@dmitryrechkin/eslint-standard",
-  "description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-  "version": "1.0.5",
-  "main": "eslint.config.mjs",
-  "scripts": {
-    "postinstall": "echo 'Remember to install peer dependencies:\n npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --save-dev\n bun add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --dev'",
-    "package:publish": "bunx publish --access public"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
-    "eslint": "^9.6.0",
-    "eslint-plugin-unused-imports": "^4.0.0"
+	"name": "@dmitryrechkin/eslint-standard",
+	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
+	"version": "1.0.7",
+	"main": "eslint.config.mjs",
+	"scripts": {
+	  "postinstall": "echo 'Remember to install peer dependencies:\n npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --save-dev\n bun add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --dev'",
+	  "package:publish": "bunx publish --access public"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"peerDependencies": {
+	  "@typescript-eslint/eslint-plugin": "^7.0.0",
+	  "@typescript-eslint/parser": "^7.0.0",
+	  "eslint": "^8.0.0",
+	  "eslint-plugin-unused-imports": "^3.0.0"
+	}
   }
-}
