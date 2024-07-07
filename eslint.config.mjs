@@ -59,10 +59,31 @@ export default function ({ tsconfigPath = './tsconfig.json' } = {}) {
 						selector: 'parameter',
 						format: ['camelCase'],
 						leadingUnderscore: 'forbid',
+						custom: {
+							regex: '^_',
+							match: false,
+						},
+					},
+					{
+						selector: 'parameter',
+						format: null,
+						leadingUnderscore: 'require',
+						modifiers: ['unused'],
 					},
 					{
 						selector: 'memberLike',
 						format: ['camelCase'],
+						leadingUnderscore: 'forbid',
+					},
+					{
+						selector: 'property',
+						modifiers: ['readonly'],
+						format: ['camelCase', 'UPPER_CASE'],
+						leadingUnderscore: 'forbid',
+					},
+					{
+						selector: 'enumMember',
+						format: ['UPPER_CASE'],
 						leadingUnderscore: 'forbid',
 					},
 				],
