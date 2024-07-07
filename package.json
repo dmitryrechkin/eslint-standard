@@ -4,7 +4,8 @@
 	"version": "1.0.3",
 	"main": "eslint.config.mjs",
 	"scripts": {
-		"postinstall": "echo 'Remember to install peer dependencies:\n npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --save-dev\n bun add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --dev'"
+		"postinstall": "echo 'Remember to install peer dependencies:\n npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --save-dev\n bun add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-unused-imports --dev'",
+		"package:publish": "bunx publish --access public"
 	},
 	"keywords": [],
 	"author": "",
