@@ -3,13 +3,19 @@ import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import unusedImportsPlugin from 'eslint-plugin-unused-imports';
 
-export default function ({ tsconfigPath = './tsconfig.json' } = {}) {
+export default function ({
+	tsconfigPath = './tsconfig.json',
+	ignores = [],
+	files = [],
+	plugins = {},
+	rules = {}
+} = {}) {
 	return [
 		{
-			ignores: ['node_modules/**', 'dist/**'],
+			ignores: ['node_modules/**', 'dist/**', ...ignores],
 		},
 		{
-			files: ['**/*.{js,jsx,ts,tsx}'],
+			files: ['**/*.{js,jsx,ts,tsx}', ...files],
 			languageOptions: {
 				parser: tsParser,
 				parserOptions: {
@@ -21,13 +27,13 @@ export default function ({ tsconfigPath = './tsconfig.json' } = {}) {
 			plugins: {
 				'@typescript-eslint': tsPlugin,
 				'unused-imports': unusedImportsPlugin,
+				...plugins,
 			},
 			rules: {
 				'@typescript-eslint/explicit-function-return-type': 'error',
-				//'linebreak-style': 'off', // Disable linebreak style rule
 				'@typescript-eslint/no-explicit-any': 'off', // Turn off the rule for no-explicit-any
 
-				/// coding guidelines
+				// coding guidelines
 				'brace-style': ['error', 'allman', { allowSingleLine: true }], // Use Allman style for braces
 				indent: ['error', 'tab', { SwitchCase: 1 }],
 				quotes: ['error', 'single'],
@@ -99,6 +105,7 @@ export default function ({ tsconfigPath = './tsconfig.json' } = {}) {
 						argsIgnorePattern: '^_',
 					},
 				],
+				...rules,
 			},
 		},
 	];
