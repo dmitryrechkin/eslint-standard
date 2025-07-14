@@ -10,7 +10,8 @@
 	},
 	"include": [
 		"src/**/*.ts",
-		"tests/**/*.ts"
+		"tests/**/*.ts",
+		"test-formatting.ts"
 	],
 	"exclude": [
 		"node_modules"

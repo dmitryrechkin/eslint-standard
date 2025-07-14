@@ -2,6 +2,11 @@
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import unusedImportsPlugin from 'eslint-plugin-unused-imports';
+import stylisticPlugin from '@stylistic/eslint-plugin';
+import jsdocPlugin from 'eslint-plugin-jsdoc';
+import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
+import perfectionistPlugin from 'eslint-plugin-perfectionist';
+import jsdocIndentPlugin from './eslint-plugin-jsdoc-indent.mjs';
 
 export default function ({
 	tsconfigPath = './tsconfig.json',
@@ -27,15 +32,22 @@ export default function ({
 			plugins: {
 				'@typescript-eslint': tsPlugin,
 				'unused-imports': unusedImportsPlugin,
+				'@stylistic': stylisticPlugin,
+				'jsdoc': jsdocPlugin,
+				'simple-import-sort': simpleImportSortPlugin,
+				'perfectionist': perfectionistPlugin,
+				'jsdoc-indent': jsdocIndentPlugin,
 				...plugins,
 			},
 			rules: {
+				// Original @dmitryrechkin/eslint-standard rules
 				'@typescript-eslint/explicit-function-return-type': 'error',
-				'@typescript-eslint/no-explicit-any': 'off', // Turn off the rule for no-explicit-any
+				'@typescript-eslint/no-explicit-any': 'off',
 
-				// coding guidelines
-				'brace-style': ['error', 'allman', { allowSingleLine: true }], // Use Allman style for braces
-				indent: ['error', 'tab', { SwitchCase: 1 }],
+				// Original coding guidelines
+				'brace-style': ['error', 'allman', { allowSingleLine: true }],
+				indent: 'off', // Disabled to avoid conflicts with @stylistic/indent and our JSDoc plugin
+				'@stylistic/indent': ['error', 'tab', { SwitchCase: 1 }],
 				quotes: ['error', 'single'],
 				semi: ['error', 'always'],
 				'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -43,7 +55,7 @@ export default function ({
 				'eol-last': ['error', 'always'],
 				'comma-dangle': ['error', 'never'],
 
-				// naming conventions
+				// Original naming conventions
 				'@typescript-eslint/naming-convention': [
 					'error',
 					{
@@ -94,7 +106,7 @@ export default function ({
 					},
 				],
 
-				// unused-imports rules
+				// Original unused-imports rules
 				'unused-imports/no-unused-imports': 'error',
 				'unused-imports/no-unused-vars': [
 					'warn',
@@ -105,6 +117,38 @@ export default function ({
 						argsIgnorePattern: '^_',
 					},
 				],
+
+				// Enhanced: Class member ordering with auto-fix
+				'perfectionist/sort-classes': [
+					'error',
+					{
+						type: 'natural',
+						order: 'asc',
+						groups: [
+							'index-signature',
+							'static-property',
+							'property',
+							'protected-property',
+							'private-property',
+							'constructor',
+							'static-method',
+							'method',
+							'protected-method',
+							'private-method'
+						]
+					}
+				],
+
+				// Enhanced: Import sorting
+				'simple-import-sort/imports': 'error',
+				'simple-import-sort/exports': 'error',
+
+				// Enhanced: JSDoc formatting with proper alignment
+				'jsdoc/check-indentation': 'off', // Disabled to avoid conflicts with our custom plugin
+				'jsdoc/tag-lines': 'off', // Disabled to avoid conflicts with our custom plugin
+				'jsdoc-indent/jsdoc-indent': ['error', { tabWidth: 4 }],
+
+				// Allow custom rules to be added
 				...rules,
 			},
 		},
