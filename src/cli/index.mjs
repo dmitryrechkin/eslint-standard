@@ -20,13 +20,15 @@ Usage:
   npx @dmitryrechkin/eslint-standard <command>
 
 Commands:
-  install-deps    Install all peer dependencies
-  check-deps      Check if all peer dependencies are installed
-  help            Show this help message
+  install-deps         Install all peer dependencies
+  check-deps           Check if all peer dependencies are installed
+  check-deps --install Auto-install missing dependencies if any
+  help                 Show this help message
 
 Examples:
   npx @dmitryrechkin/eslint-standard install-deps
   npx @dmitryrechkin/eslint-standard check-deps
+  npx @dmitryrechkin/eslint-standard check-deps --install
 		`);
 		break;
 	default:

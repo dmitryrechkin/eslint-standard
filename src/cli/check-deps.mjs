@@ -3,9 +3,13 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join, resolve } from 'path';
+import { spawn } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// Check for --install flag
+const shouldInstall = process.argv.includes('--install');
 
 // Get peer dependencies
 const packageJsonPath = join(__dirname, '../../package.json');
@@ -64,13 +68,33 @@ if (missingDeps.length === 0 && outdatedDeps.length === 0) {
 } else {
 	if (missingDeps.length > 0) {
 		console.log(`\n❌ Missing ${missingDeps.length} dependencies:`);
-		console.log('Run: npx @dmitryrechkin/eslint-standard install-deps');
+		missingDeps.forEach(dep => console.log(`  - ${dep}`));
+		
+		if (shouldInstall) {
+			console.log('\n🔧 Auto-installing missing dependencies...\n');
+			
+			// Import and run the install-deps script
+			try {
+				const installDepsModule = await import('./install-deps.mjs');
+				// The install-deps script will handle the installation
+			} catch (error) {
+				console.error('❌ Failed to auto-install dependencies:', error.message);
+				process.exit(1);
+			}
+		} else {
+			console.log('\n💡 To install missing dependencies:');
+			console.log('   npx @dmitryrechkin/eslint-standard install-deps');
+			console.log('   or run this command with --install flag');
+		}
 	}
 	if (outdatedDeps.length > 0) {
 		console.log(`\n⚠️  ${outdatedDeps.length} dependencies may be outdated:`);
 		outdatedDeps.forEach(dep => console.log(`  - ${dep}`));
 	}
-	process.exit(1);
+	
+	if (!shouldInstall && missingDeps.length > 0) {
+		process.exit(1);
+	}
 }
 
 export default function checkDeps() {
