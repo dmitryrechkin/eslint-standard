@@ -6,8 +6,8 @@ import stylisticPlugin from '@stylistic/eslint-plugin';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
-import jsdocIndentPlugin from './eslint-plugin-jsdoc-indent.mjs';
-import interfaceBracePlugin from './eslint-plugin-interface-brace.mjs';
+import jsdocIndentPlugin from './src/plugins/jsdoc-indent.mjs';
+import interfaceBracePlugin from './src/plugins/interface-brace.mjs';
 
 export default function ({
 	tsconfigPath = './tsconfig.json',
