@@ -6,6 +6,7 @@
 	"files": [
 	  "eslint.config.mjs",
 	  "eslint-plugin-jsdoc-indent.mjs",
+	  "eslint-plugin-interface-brace.mjs",
 	  "README.md",
 	  "LICENSE"
 	],
