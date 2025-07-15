@@ -32,9 +32,5 @@ console.log(`
 📚 Documentation: https://github.com/dmitryrechkin/eslint-standard
 `);
 
-// Run check-deps to show current status
-try {
-	await import('./check-deps.mjs');
-} catch (error) {
-	// Silent fail - don't break installation
-}
+// Don't run check-deps in postinstall to avoid errors
+// Users can run it manually with: npx @dmitryrechkin/eslint-standard check-deps
