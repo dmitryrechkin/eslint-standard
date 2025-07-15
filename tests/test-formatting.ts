@@ -5,6 +5,26 @@ import { TypeResponse } from '../types';
 import type { SomeInterface } from './interfaces';
 
 /**
+ * Freshdesk-specific configuration that goes in the providerSpecific field
+ * This allows proper typing instead of using Record<string, unknown>
+ */
+export interface TypeFreshdeskProviderSpecific
+{
+	/** Freshdesk API key for authentication */
+	apiKey: string;
+
+	/** Freshdesk domain (subdomain only, without .freshdesk.com) */
+	domain: string;
+
+	/** Optional webhook secret for validating incoming webhooks */
+	webhookSecret?: string;
+
+	/** Optional custom headers to send with requests */
+	headers?: Record<string, string>;
+}
+
+
+/**
  * Test class with misaligned JSDoc comments and wrong member ordering
  * @class TestClass
  * @param config - Configuration object

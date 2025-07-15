@@ -7,6 +7,7 @@ import jsdocPlugin from 'eslint-plugin-jsdoc';
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import jsdocIndentPlugin from './eslint-plugin-jsdoc-indent.mjs';
+import interfaceBracePlugin from './eslint-plugin-interface-brace.mjs';
 
 export default function ({
 	tsconfigPath = './tsconfig.json',
@@ -37,6 +38,7 @@ export default function ({
 				'simple-import-sort': simpleImportSortPlugin,
 				'perfectionist': perfectionistPlugin,
 				'jsdoc-indent': jsdocIndentPlugin,
+				'interface-brace': interfaceBracePlugin,
 				...plugins,
 			},
 			rules: {
@@ -45,15 +47,21 @@ export default function ({
 				'@typescript-eslint/no-explicit-any': 'off',
 
 				// Original coding guidelines
-				'brace-style': ['error', 'allman', { allowSingleLine: true }],
+				'brace-style': 'off', // Disabled in favor of @stylistic/brace-style
+				'@stylistic/brace-style': ['error', 'allman', { allowSingleLine: true }],
 				indent: 'off', // Disabled to avoid conflicts with @stylistic/indent and our JSDoc plugin
 				'@stylistic/indent': ['error', 'tab', { SwitchCase: 1 }],
-				quotes: ['error', 'single'],
-				semi: ['error', 'always'],
+				quotes: 'off', // Disabled in favor of @stylistic/quotes
+				'@stylistic/quotes': ['error', 'single'],
+				semi: 'off', // Disabled in favor of @stylistic/semi
+				'@stylistic/semi': ['error', 'always'],
 				'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-				'no-trailing-spaces': 'error',
-				'eol-last': ['error', 'always'],
-				'comma-dangle': ['error', 'never'],
+				'no-trailing-spaces': 'off', // Disabled in favor of @stylistic/no-trailing-spaces
+				'@stylistic/no-trailing-spaces': 'error',
+				'eol-last': 'off', // Disabled in favor of @stylistic/eol-last
+				'@stylistic/eol-last': ['error', 'always'],
+				'comma-dangle': 'off', // Disabled in favor of @stylistic/comma-dangle
+				'@stylistic/comma-dangle': ['error', 'never'],
 
 				// Original naming conventions
 				'@typescript-eslint/naming-convention': [
@@ -147,6 +155,9 @@ export default function ({
 				'jsdoc/check-indentation': 'off', // Disabled to avoid conflicts with our custom plugin
 				'jsdoc/tag-lines': 'off', // Disabled to avoid conflicts with our custom plugin
 				'jsdoc-indent/jsdoc-indent': ['error', { tabWidth: 4 }],
+				
+				// Enhanced: Interface brace style
+				'interface-brace/interface-brace-style': 'error',
 
 				// Allow custom rules to be added
 				...rules,
