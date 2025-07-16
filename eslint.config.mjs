@@ -155,6 +155,49 @@ export default function ({
 				'jsdoc/check-indentation': 'off', // Disabled to avoid conflicts with our custom plugin
 				'jsdoc/tag-lines': 'off', // Disabled to avoid conflicts with our custom plugin
 				'jsdoc-indent/jsdoc-indent': ['error', { tabWidth: 4 }],
+
+				// JSDoc requirements with type hints
+				'jsdoc/require-jsdoc': ['error', {
+					enableFixer: false, // Don't auto-generate empty JSDoc blocks
+					require: {
+						FunctionDeclaration: true,
+						MethodDefinition: true,
+						ClassDeclaration: true,
+						ArrowFunctionExpression: true,
+						FunctionExpression: true
+					},
+					contexts: [
+						'TSInterfaceDeclaration',
+						'TSTypeAliasDeclaration',
+						'TSEnumDeclaration'
+						// Removed 'ClassProperty' and 'PropertyDefinition' - no JSDoc required for properties
+					]
+				}],
+				'jsdoc/require-description': 'error',
+				'jsdoc/require-param': 'error',
+				'jsdoc/require-param-description': 'error',
+				'jsdoc/require-param-name': 'error',
+				'jsdoc/require-returns': 'error',
+				'jsdoc/require-returns-description': 'error',
+				'jsdoc/check-param-names': 'error',
+				'jsdoc/check-tag-names': 'error',
+				'jsdoc/check-types': 'error',
+				'jsdoc/valid-types': 'error',
+				'jsdoc/no-undefined-types': 'error',
+				'jsdoc/require-yields': 'error',
+				'jsdoc/require-throws': 'error',
+				'jsdoc/check-alignment': 'off', // Handled by custom plugin
+				'jsdoc/multiline-blocks': ['error', {
+					noMultilineBlocks: false,
+					minimumLengthForMultiline: 40
+				}],
+
+				// JSDoc with type hints requirements
+				'jsdoc/require-param-type': 'error', // Require type hints for parameters
+				'jsdoc/require-returns-type': 'error', // Require type hints for returns
+				'jsdoc/no-types': 'off', // Allow type annotations in JSDoc
+				'jsdoc/check-types': 'error', // Ensure valid JSDoc types
+				'jsdoc/valid-types': 'error', // Validate type syntax
 				
 				// Enhanced: Interface brace style
 				'interface-brace/interface-brace-style': 'error',

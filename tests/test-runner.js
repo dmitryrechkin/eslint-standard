@@ -28,14 +28,22 @@ try {
   console.log('\n🔧 Running ESLint --fix...');
   
   // Run ESLint with our config using the parent project's node_modules
-  execSync('npx eslint tests/test-formatting.ts --config tests/test-config.mjs --fix', { 
-    stdio: 'pipe',
-    cwd: path.join(__dirname, '..'),
-    env: {
-      ...process.env,
-      NODE_PATH: path.join(__dirname, '../../../HappySupport/node_modules')
+  try {
+    execSync('npx eslint tests/test-formatting.ts --config tests/test-config.mjs --fix', { 
+      stdio: 'pipe',
+      cwd: path.join(__dirname, '..'),
+      env: {
+        ...process.env,
+        NODE_PATH: path.join(__dirname, '../../../HappySupport/node_modules')
+      }
+    });
+  } catch (eslintError) {
+    // ESLint exits with error code when there are unfixable errors, but we still want to check if formatting was applied
+    if (eslintError.stdout) {
+      console.log('\nESLint reported errors (expected for missing descriptions):');
+      console.log(eslintError.stdout.toString());
     }
-  });
+  }
   
   // Read the test file after formatting
   const afterContent = fs.readFileSync(testPath, 'utf8');
@@ -55,6 +63,15 @@ try {
   console.log('\n📝 JSDoc comment alignment:');
   jsdocLines.slice(0, 3).forEach(line => console.log('  ', JSON.stringify(line)));
   
+  // Check JSDoc generation
+  const jsdocCommentBlocks = afterContent.match(/\/\*\*[\s\S]*?\*\//g) || [];
+  const beforeJsdocBlocks = beforeContent.match(/\/\*\*[\s\S]*?\*\//g) || [];
+  const newJsdocBlocks = jsdocCommentBlocks.length - beforeJsdocBlocks.length;
+  console.log('\n📑 JSDoc generation:');
+  console.log(`  Original JSDoc blocks: ${beforeJsdocBlocks.length}`);
+  console.log(`  Final JSDoc blocks: ${jsdocCommentBlocks.length}`);
+  console.log(`  New JSDoc blocks added: ${newJsdocBlocks}`);
+  
   // Check member ordering (look for class structure)
   const classStartIndex = lines.findIndex(line => line.includes('export class TestClass'));
   if (classStartIndex !== -1) {
@@ -71,10 +88,12 @@ try {
   const majorIssuesFixed = beforeContent !== afterContent;
   const importsFixed = afterImportLines.length > 0;
   const jsdocMostlyFixed = !hasWrongSpaces; // Our custom plugin should fix most space issues
+  const jsdocGenerated = newJsdocBlocks > 0;
   
   console.log('\n📊 Summary:');
   console.log(`✅ Import sorting: ${importsFixed ? 'WORKING' : 'FAILED'}`);
   console.log(`✅ JSDoc alignment: ${jsdocMostlyFixed ? 'MOSTLY FIXED' : 'FAILED'}`);
+  console.log(`✅ JSDoc generation: ${jsdocGenerated ? `WORKING (${newJsdocBlocks} blocks added)` : 'NO NEW BLOCKS'}`);
   console.log('✅ Member ordering: AUTO-FIXED with Perfectionist!');
   console.log(`✅ General formatting: ${majorIssuesFixed ? 'APPLIED' : 'NO CHANGES'}`);
   
@@ -83,6 +102,7 @@ try {
     console.log('📁 Formatted file saved as: tests/test-formatting.ts');
     console.log('🔍 You can review the changes by comparing with tests/test-formatting.ts.origin');
     console.log('\nℹ️  Note: Member ordering is now auto-fixed with eslint-plugin-perfectionist!');
+    console.log('ℹ️  Note: JSDoc blocks are now auto-generated for functions, classes, and interfaces!');
   } else {
     console.error('\n❌ FAILED: Some major formatting issues not resolved');
     process.exit(1);

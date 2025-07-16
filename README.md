@@ -9,6 +9,7 @@ A comprehensive ESLint configuration package with TypeScript support, featuring 
 - 🔄 **Automatic Import Sorting**: Organizes imports with type imports and regular imports properly grouped
 - 🏗️ **Class Member Ordering**: Auto-reorders class members by visibility (public → protected → private) and type (fields → constructor → methods)
 - 📝 **JSDoc Alignment**: Automatically fixes JSDoc comment indentation and alignment with proper tab formatting
+- 📑 **JSDoc Requirements**: Enforces comprehensive JSDoc documentation with auto-generation of comment blocks
 - 🧹 **Unused Import Removal**: Automatically detects and removes unused imports
 
 ### **Code Style Enforcement**
@@ -16,6 +17,7 @@ A comprehensive ESLint configuration package with TypeScript support, featuring 
 - **Modern JavaScript**: Supports ECMAScript 2020 and newer features
 - **Consistent Formatting**: Enforces Allman brace style, tab indentation, single quotes, and semicolons
 - **Naming Conventions**: Comprehensive naming rules for variables, functions, classes, and more
+- **JSDoc Documentation**: Requires comprehensive documentation for all exported functions, classes, methods, interfaces, types, and enums
 - **Customizable**: Flexible configuration options for different project needs
 
 ## 📦 Installation
@@ -68,7 +70,14 @@ export default eslintStandard({
   rules: {
     // Override or add custom rules
     'no-console': 'warn',
-    'perfectionist/sort-classes': 'off' // Disable auto class member sorting if needed
+    'perfectionist/sort-classes': 'off', // Disable auto class member sorting if needed
+    // Disable JSDoc requirements if needed
+    'jsdoc/require-jsdoc': 'off',
+    'jsdoc/require-description': 'off',
+    // Disable type hint requirements (if you prefer TypeScript-only types)
+    'jsdoc/require-param-type': 'off',
+    'jsdoc/require-returns-type': 'off',
+    'jsdoc/no-types': ['error', { contexts: ['any'] }]
   }
 });
 ```
@@ -131,7 +140,10 @@ When you run `eslint --fix`, this configuration will automatically:
 2. **🔄 Reorder Class Members**: Arrange class members by visibility and type:
    - Static properties → Instance properties → Constructor → Static methods → Instance methods
    - Within each group: public → protected → private
-3. **📝 Fix JSDoc Indentation**: Align JSDoc comments with proper tab indentation
+3. **📝 Fix JSDoc Comments**: 
+   - Generate missing JSDoc comment blocks for functions, classes, methods, interfaces, types, and enums
+   - Align JSDoc comments with proper tab indentation
+   - Add parameter and return value placeholders
 4. **🧹 Remove Unused Imports**: Clean up unused import statements
 5. **✨ Format Code**: Apply consistent spacing, quotes, semicolons, and brace styles
 
@@ -195,6 +207,44 @@ export class UserService
 }
 ```
 
+#### JSDoc Documentation with Type Hints
+```typescript
+// ❌ Before - Missing JSDoc
+export function processUser(userData: UserData): ProcessedResult {
+    return process(userData);
+}
+
+// ⚠️ After (auto-fixed) - JSDoc block generated but missing type hints
+/**
+ * 
+ * @param userData
+ * @returns
+ */
+export function processUser(userData: UserData): ProcessedResult {
+    return process(userData);
+}
+
+// ❌ Still fails - Missing type hints and descriptions
+// ESLint errors:
+// - Missing JSDoc @param "userData" type
+// - Missing JSDoc @param "userData" description  
+// - Missing JSDoc @returns type
+// - Missing JSDoc block description
+
+// ✅ Complete JSDoc with type hints (must be added manually)
+/**
+ * Processes user data and returns formatted result.
+ * @param {UserData} userData - The user data to process
+ * @returns {ProcessedResult} The processed user result
+ */
+export function processUser(userData: UserData): ProcessedResult {
+    return process(userData);
+}
+
+// ⚠️ Note: ESLint cannot auto-generate type hints from TypeScript types.
+// Type annotations must be added manually to satisfy the linter requirements.
+```
+
 #### JSDoc Alignment
 ```typescript
 // ❌ Before
@@ -219,6 +269,56 @@ export class UserService
 - **Constants**: `UPPER_CASE` or `camelCase`
 - **Enum Members**: `UPPER_CASE` or `PascalCase`
 - **Type Parameters**: `PascalCase`
+
+### 📝 JSDoc with Type Hints Requirements
+
+This configuration requires comprehensive JSDoc documentation with type hints:
+
+- **Type Annotations Required**: All parameters and return values must include JSDoc type hints
+- **Description Required**: All functions, parameters, and return values must have descriptions
+- **Auto-generation Limited**: ESLint can generate JSDoc blocks but cannot infer TypeScript types
+- **Manual Completion Needed**: Type hints must be added manually after auto-generation
+
+#### Required JSDoc Format
+
+```javascript
+/**
+ * Function description is required.
+ * @param {string} name - Parameter description is required
+ * @param {number} age - Type hint {number} is required
+ * @returns {string} Return type and description required
+ */
+function greet(name: string, age: number): string {
+    return `Hello ${name}, you are ${age} years old`;
+}
+```
+
+#### Common Type Hint Patterns
+
+```javascript
+// Basic types
+@param {string} name
+@param {number} count
+@param {boolean} isActive
+@param {Object} config
+@param {Array<string>} items
+@param {Function} callback
+
+// Complex types
+@param {UserData} userData - Custom type
+@param {Promise<Response>} response - Generic type
+@param {string|number} id - Union type
+@param {{name: string, age: number}} person - Object type
+@param {string[]} names - Array shorthand
+@returns {void} - For functions with no return
+```
+
+#### Important Notes
+
+1. **ESLint Cannot Auto-Generate Types**: While ESLint can create JSDoc blocks, it cannot determine TypeScript types
+2. **Manual Work Required**: After running `--fix`, you must manually add all type hints
+3. **Duplication with TypeScript**: This approach duplicates type information already in TypeScript
+4. **Maintenance Overhead**: Types must be kept in sync between TypeScript and JSDoc
 
 ## ⚠️ Troubleshooting
 

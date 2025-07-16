@@ -103,7 +103,7 @@ const interfaceBraceRule = {
 								// Replace the space before the brace with a newline and proper indentation
 								return fixer.replaceTextRange(
 									[equalsToken.range[1], openingBrace.range[0]], 
-									' =\n' + baseIndent
+									'\n' + baseIndent
 								);
 							}
 						});
