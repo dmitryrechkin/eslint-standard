@@ -44,7 +44,7 @@ export default function ({
 			rules: {
 				// Original @dmitryrechkin/eslint-standard rules
 				'@typescript-eslint/explicit-function-return-type': 'error',
-				'@typescript-eslint/no-explicit-any': 'off',
+				'@typescript-eslint/no-explicit-any': 'error', // Ban 'any' type for type safety
 
 				// Original coding guidelines
 				'brace-style': 'off', // Disabled in favor of @stylistic/brace-style
@@ -202,6 +202,125 @@ export default function ({
 				// Enhanced: Interface brace style
 				'interface-brace/interface-brace-style': 'error',
 
+				// Code Complexity Rules (industry standards)
+				'complexity': ['error', 10], // Cyclomatic complexity - max 10 paths through a function
+				'max-lines-per-function': ['error', {
+					max: 100,
+					skipBlankLines: true,
+					skipComments: true,
+					IIFEs: true
+				}],
+				'max-statements': ['error', 20], // Max 20 statements per function
+				'max-params': ['error', 4], // Max 4 parameters per function
+				'max-depth': ['error', { max: 3 }], // Max 3 levels of block nesting
+				'max-nested-callbacks': ['error', 3], // Max 3 levels of callback nesting
+				'max-lines': ['warn', {
+					max: 300,
+					skipBlankLines: true,
+					skipComments: true
+				}],
+				'max-len': ['error', {
+					code: 120,
+					tabWidth: 4,
+					ignoreUrls: true,
+					ignoreStrings: true,
+					ignoreTemplateLiterals: true,
+					ignoreRegExpLiterals: true,
+					ignoreComments: true
+				}],
+				'max-statements-per-line': ['error', { max: 1 }],
+				'@typescript-eslint/max-params': ['error', { max: 4 }], // TypeScript-aware version
+				'no-else-return': ['error', { allowElseIf: false }], // Encourage early returns
+				'no-lonely-if': 'error', // Avoid single if in else block
+				'no-nested-ternary': 'error', // Avoid complex ternary operators
+				'@typescript-eslint/no-misused-promises': 'error', // Interface segregation
+				'@typescript-eslint/prefer-readonly': 'error', // Immutability
+				'@typescript-eslint/explicit-member-accessibility': ['error', {
+					accessibility: 'explicit',
+					overrides: {
+						constructors: 'no-public'
+					}
+				}], // Clear interface contracts
+
+				// Additional pragmatic safety rules
+				'curly': ['error', 'all'], // Always use curly braces
+				'eqeqeq': ['error', 'always'], // Use === and !==
+				'no-var': 'error', // Use let/const instead
+				'prefer-const': 'error', // Use const for unchanged variables
+				'no-console': ['warn', { allow: ['warn', 'error'] }], // Warn on console.log
+				'@typescript-eslint/no-floating-promises': 'error', // Await or handle promises
+				'@typescript-eslint/await-thenable': 'error', // Only await promises
+				'no-return-await': 'off', // Actually useful for stack traces
+				
+				// Array safety
+				'@typescript-eslint/no-array-delete': 'error', // Use splice, not delete
+				'array-callback-return': 'error', // Ensure array methods return values
+				
+				// Error handling
+				'@typescript-eslint/only-throw-error': 'error', // Only throw Error objects
+				'no-empty': ['error', { allowEmptyCatch: false }], // No empty blocks
+				'no-fallthrough': 'error', // Prevent switch case fallthrough
+				
+				// Null/undefined safety
+				'@typescript-eslint/no-unnecessary-condition': 'warn', // Catch always-truthy/falsy
+				'no-unsafe-optional-chaining': 'error', // Prevent ?. errors
+				
+				// Function safety
+				'require-await': 'error', // Async functions must use await
+				'no-async-promise-executor': 'error', // No async in Promise constructor
+				'@typescript-eslint/no-misused-promises': 'error', // Correct promise usage
+				
+				// Variable safety
+				'no-shadow': 'off', // Turn off base rule
+				'@typescript-eslint/no-shadow': 'error', // No variable shadowing
+				'no-use-before-define': 'off', // Turn off base rule
+				'@typescript-eslint/no-use-before-define': 'error', // Define before use
+				'no-param-reassign': ['error', { props: false }], // Don't reassign parameters (but allow property mutation)
+				
+				// Loop safety
+				'for-direction': 'error', // Prevent infinite loops
+				'no-unmodified-loop-condition': 'error', // Loop conditions must change
+				'no-await-in-loop': 'warn', // Warn on await in loops
+				
+				// Security basics
+				'no-eval': 'error', // No eval()
+				'no-implied-eval': 'error', // No setTimeout(string)
+				'no-new-func': 'error', // No new Function()
+				
+				// Maintainability
+				'no-duplicate-imports': 'error', // One import per module
+				'@typescript-eslint/no-duplicate-enum-values': 'error', // Unique enum values
+				'no-unreachable': 'error', // No code after return/throw
+				'no-unused-expressions': ['error', { 
+					allowShortCircuit: true, // Allow && and || for control flow
+					allowTernary: true, // Allow ternary for side effects
+					allowTaggedTemplates: true // Allow tagged templates
+				}], // No side-effect free expressions
+				
+				// Common bug prevention
+				'no-cond-assign': 'error', // No assignment in conditions
+				'no-constant-condition': 'error', // No constant conditions in if/while
+				'no-debugger': 'error', // No debugger statements
+				'no-dupe-keys': 'error', // No duplicate object keys
+				'no-dupe-args': 'error', // No duplicate function arguments
+				'no-irregular-whitespace': 'error', // No weird whitespace
+				'valid-typeof': 'error', // Typeof comparisons must be valid
+				'@typescript-eslint/no-unnecessary-type-assertion': 'error', // No redundant type assertions
+				
+				// Number safety
+				'no-loss-of-precision': 'error', // Prevent precision loss
+				'no-compare-neg-zero': 'error', // Use Object.is for -0
+				'use-isnan': 'error', // Use isNaN() for NaN checks
+				'no-magic-numbers': ['warn', { 
+					ignore: [0, 1, -1, 2, 10, 100, 1000, // Common multipliers
+						60, 24, 365, // Time calculations
+						200, 204, 301, 302, 400, 401, 403, 404, 500, 502, 503], // HTTP codes
+					ignoreArrayIndexes: true,
+					ignoreDefaultValues: true,
+					enforceConst: true,
+					ignoreClassFieldInitialValues: true
+				}], // Named constants for magic numbers
+				
 				// Allow custom rules to be added
 				...rules,
 			},

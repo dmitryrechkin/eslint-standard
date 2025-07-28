@@ -1,7 +1,7 @@
 import eslintStandardConfig from '../eslint.config.mjs';
 
 export default eslintStandardConfig({
-	files: ['tests/test-formatting.ts'],
+	files: ['tests/**/*.ts'],
 	ignores: [],
-	tsconfigPath: './tsconfig.json'
+	tsconfigPath: './tests/tsconfig.json'
 });
