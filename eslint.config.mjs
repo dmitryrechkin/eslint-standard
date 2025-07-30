@@ -298,7 +298,7 @@ export default function ({
 						format: ['PascalCase'],
 						leadingUnderscore: 'forbid',
 						custom: {
-							regex: 'Interface$',
+							regex: '(^Type[A-Z]|Interface$)',
 							match: true
 						}
 					},
