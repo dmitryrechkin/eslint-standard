@@ -59,6 +59,17 @@ export default function ({
 				'functional': functionalPlugin,
 				...plugins,
 			},
+			settings: {
+				'import/resolver': {
+					node: {
+						extensions: ['.js', '.jsx', '.ts', '.tsx'],
+					},
+				},
+				'import/parsers': {
+					'@typescript-eslint/parser': ['.ts', '.tsx'],
+				},
+				'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+			},
 			rules: {
 				// Original @dmitryrechkin/eslint-standard rules
 				'@typescript-eslint/explicit-function-return-type': 'error',
@@ -502,7 +513,10 @@ export default function ({
 				'promise/prefer-await-to-callbacks': 'warn',
 				
 				// Import plugin rules
-				'import/no-unresolved': 'error',
+				'import/no-unresolved': ['error', { 
+					ignore: ['\\.ts$', '\\.tsx$'],
+					caseSensitive: false 
+				}],
 				'import/named': 'error',
 				'import/default': 'error',
 				'import/namespace': 'error',
