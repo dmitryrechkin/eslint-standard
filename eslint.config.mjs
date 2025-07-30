@@ -492,7 +492,7 @@ export default function ({
 				'security/detect-child-process': 'warn',
 				'security/detect-disable-mustache-escape': 'error',
 				'security/detect-no-csrf-before-method-override': 'error',
-				'security/detect-object-injection': 'warn',
+				'security/detect-object-injection': 'off', // Too many false positives with TypeScript enums
 				'security/detect-possible-timing-attacks': 'warn',
 				'security/detect-pseudoRandomBytes': 'error',
 				
@@ -625,7 +625,15 @@ export default function ({
 					cases: {
 						camelCase: true, // For folders: userAuth, licenseActivation
 						pascalCase: true, // For class files: UserService.ts
-					}
+					},
+					ignore: [
+						/.*API.*\.test\.ts$/,     // Allow API in test files
+						/.*HTTP.*\.test\.ts$/,    // Allow HTTP in test files  
+						/.*URL.*\.test\.ts$/,     // Allow URL in test files
+						/.*JSON.*\.test\.ts$/,    // Allow JSON in test files
+						/.*XML.*\.test\.ts$/,     // Allow XML in test files
+						/.*SQL.*\.test\.ts$/      // Allow SQL in test files
+					]
 				}],
 				'unicorn/import-style': 'error',
 				'unicorn/new-for-builtins': 'error',
@@ -766,7 +774,13 @@ export default function ({
 				'functional/no-loop-statements': 'warn', // Encourage functional alternatives
 				'functional/immutable-data': ['warn', {
 					ignoreImmediateMutation: true,
-					ignoreAccessorPattern: ['**.current', '**.ref']
+					ignoreAccessorPattern: [
+						'**.current', 
+						'**.ref',
+						'this.**',        // Allow mutations to class properties
+						'this[*].**',     // Allow mutations to class indexed properties
+						'global.**'       // Allow mutations to global objects (test mocking)
+					]
 				}],
 				'functional/no-throw-statements': 'off', // Allow throwing errors
 				'functional/no-try-statements': 'off', // Allow try-catch
@@ -778,6 +792,27 @@ export default function ({
 				
 				// Allow custom rules to be added
 				...rules,
+			},
+		},
+		// Test file specific overrides
+		{
+			files: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}', '**/tests/**/*.{js,jsx,ts,tsx}'],
+			rules: {
+				// Disable function scoping rule for test helpers
+				'unicorn/consistent-function-scoping': 'off',
+				
+				// Allow test URLs and API endpoints without triggering secrets detection
+				'no-secrets/no-secrets': 'off',
+				
+				// Allow only universally understood abbreviations
+				'id-length': ['warn', { 
+					min: 3,
+					exceptions: ['id', 'fn']
+				}],
+				
+				// Relax rules that are too strict for tests
+				'unicorn/no-null': 'warn',                    // APIs often legitimately use null
+				'functional/no-loop-statements': 'warn',      // Loops can be clearer than functional alternatives in tests
 			},
 		},
 	];
