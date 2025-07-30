@@ -22,6 +22,21 @@ const tests = [
 		name: 'Safety Rules',
 		script: 'test-safety-rules.js',
 		description: 'Tests promise safety, type safety, security, and error handling'
+	},
+	{
+		name: 'Security Rules',
+		script: 'test-security-rules.js',
+		description: 'Tests security plugin rules and secret detection'
+	},
+	{
+		name: 'SonarJS Rules',
+		script: 'test-sonarjs-rules.js',
+		description: 'Tests code smells, cognitive complexity, and maintainability'
+	},
+	{
+		name: 'Unicorn Rules',
+		script: 'test-unicorn-rules.js',
+		description: 'Tests modern JavaScript patterns and best practices'
 	}
 ];
 
@@ -37,12 +52,17 @@ for (const test of tests) {
 	try {
 		execSync(`node ${test.script}`, {
 			stdio: 'inherit',
-			cwd: __dirname
+			cwd: __dirname,
+			timeout: 60000 // 60 second timeout per test
 		});
 		passedTests++;
 		results.push({ name: test.name, status: '✅ PASSED' });
 	} catch (error) {
-		results.push({ name: test.name, status: '❌ FAILED' });
+		if (error.signal === 'SIGTERM') {
+			results.push({ name: test.name, status: '⏰ TIMEOUT' });
+		} else {
+			results.push({ name: test.name, status: '❌ FAILED' });
+		}
 	}
 	
 	console.log('\n' + '='.repeat(50));

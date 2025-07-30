@@ -8,16 +8,16 @@ import type { SomeInterface } from './interfaces';
 export interface TypeFreshdeskProviderSpecific
 {
 	/** Freshdesk API key for authentication */
-	apiKey: string;
+	readonly apiKey: string;
 
 	/** Freshdesk domain (subdomain only, without .freshdesk.com) */
-	domain: string;
+	readonly domain: string;
 
 	/** Optional webhook secret for validating incoming webhooks */
-	webhookSecret?: string;
+	readonly webhookSecret?: string;
 
 	/** Optional custom headers to send with requests */
-	headers?: Record<string, string>;
+	readonly headers?: Record<string, string>;
 }
 
 
@@ -35,7 +35,7 @@ export class TestClass implements SomeInterface
 	public readonly name: string;
 
 	// Wrong order: private field should be after public
-	private initialized = false;
+	private readonly initialized = false;
 
 	// Wrong order: constructor should come after fields
 	constructor(name: string)
@@ -111,7 +111,7 @@ export class TestClass implements SomeInterface
 export interface TestInterface
 {
 	readonly id: string;
-	name: string;
+	readonly name: string;
 
 	/**
 	 * Method with wrong JSDoc alignment
@@ -138,7 +138,7 @@ export enum TestEnum
  * @param options.uppercase
  * @returns Formatted output
  */
-export function formatString(input: string, options?: { uppercase?: boolean }): string
+export function formatString(input: string, options?: { readonly uppercase?: boolean }): string
 {
 	let result = input.trim();
 
@@ -151,7 +151,7 @@ export function formatString(input: string, options?: { uppercase?: boolean }): 
 }
 
 // Missing JSDoc for arrow function - should be added
-export const processData = (data: string[]): string[] =>
+export const processData = (data: readonly string[]): readonly string[] =>
 {
 	return data.map(item => item.trim()).filter(Boolean);
 };
@@ -159,8 +159,8 @@ export const processData = (data: string[]): string[] =>
 // Missing JSDoc for type alias - should be added
 export type ConfigOptions =
 {
-	debug: boolean;
-	timeout: number;
+	readonly debug: boolean;
+	readonly timeout: number;
 };
 
 // Missing JSDoc for another enum - should be added
