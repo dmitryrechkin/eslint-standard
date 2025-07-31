@@ -77,7 +77,8 @@ export default function ({
 
 				// Original coding guidelines
 				'brace-style': 'off', // Disabled in favor of @stylistic/brace-style
-				'@stylistic/brace-style': ['error', 'allman', { allowSingleLine: true }],
+				'@stylistic/brace-style': ['error', 'allman', { allowSingleLine: false }],
+				'@stylistic/block-spacing': ['error', 'never'], // Enforce consistent spacing inside blocks
 				indent: 'off', // Disabled to avoid conflicts with @stylistic/indent and our JSDoc plugin
 				'@stylistic/indent': ['error', 'tab', { SwitchCase: 1 }],
 				quotes: 'off', // Disabled in favor of @stylistic/quotes
