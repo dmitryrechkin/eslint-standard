@@ -73,7 +73,7 @@ const switchCaseBraceRule = {
 						messageId: 'expectedNewlineAfterOpeningBrace',
 						fix(fixer) {
 							// Add newline and proper indentation after opening brace
-							const indentation = '\t'.repeat(getIndentLevel(node) + 2);
+							const indentation = '\t'.repeat(getIndentLevel(node) + 1);
 							const fixes = [];
 							
 							// Add newline after opening brace
@@ -82,7 +82,7 @@ const switchCaseBraceRule = {
 							// Also ensure closing brace is on its own line with proper indentation
 							const lastStatement = blockStatement.body[blockStatement.body.length - 1];
 							const lastToken = sourceCode.getLastToken(lastStatement);
-							const closingBraceIndentation = '\t'.repeat(getIndentLevel(node) + 1);
+							const closingBraceIndentation = '\t'.repeat(getIndentLevel(node));
 							
 							if (lastToken.loc.end.line === closingBrace.loc.start.line) {
 								fixes.push(fixer.insertTextBefore(closingBrace, `\n${closingBraceIndentation}`));
