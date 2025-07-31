@@ -87,10 +87,10 @@ export function switchWithBreaks(value: number): string {
 
 /**
  * Safe optional chaining
- * @param {object | null} obj - The object to check
+ * @param {object | undefined} obj - The object to check
  * @returns {void}
  */
-export function safeOptionalChaining(obj: { prop?: { method?: () => void } } | null): void {
+export function safeOptionalChaining(obj: { prop?: { method?: () => void } } | undefined): void {
 	if (obj?.prop?.method) {
 		obj.prop.method();
 	}

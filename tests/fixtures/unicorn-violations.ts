@@ -130,10 +130,10 @@ export function testNewBuffer(): Buffer {
 }
 
 /**
- * Test null usage violations
+ * Test null usage violations  
  */
 export function testNullUsage(): any {
-	// unicorn/no-null - should use undefined
+	// unicorn/no-null - should use undefined instead of null
 	return null;
 }
 

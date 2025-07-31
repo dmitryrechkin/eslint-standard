@@ -135,7 +135,7 @@ export function useBufferFrom(): Buffer {
 }
 
 /**
- * Use undefined instead of null
+ * Use undefined instead of undefined
  */
 export function useUndefined(): any {
 	return undefined;
