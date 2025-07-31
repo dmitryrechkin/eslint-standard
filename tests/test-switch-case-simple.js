@@ -23,7 +23,7 @@ const testContent = `function testSwitch(value) {
 }`;
 
 async function testSwitchCaseBraceFormatting() {
-    console.log('🧪 Switch Case Brace Formatting Test\\n');
+    console.log('🧪 Switch Case Brace Formatting Test\n');
 
     const testFilePath = path.join(__dirname, 'test-switch-temp.js');
 
@@ -32,7 +32,7 @@ async function testSwitchCaseBraceFormatting() {
         fs.writeFileSync(testFilePath, testContent);
 
         console.log('📋 Original formatting:');
-        console.log(testContent.split('\\n').slice(2, 6).join('\\n'));
+        console.log(testContent.split('\n').slice(2, 6).join('\n'));
 
         // Create minimal ESLint config for testing
         const switchCaseBracePlugin = (await import('../src/plugins/switch-case-brace.mjs')).default;
@@ -49,27 +49,27 @@ async function testSwitchCaseBraceFormatting() {
             fix: true
         });
 
-        console.log('\\n🔧 Running ESLint with --fix...');
+        console.log('\n🔧 Running ESLint with --fix...');
         const results = await eslint.lintFiles([testFilePath]);
         await ESLint.outputFixes(results);
 
         const fixedContent = fs.readFileSync(testFilePath, 'utf8');
         
-        console.log('\\n✅ Fixed formatting:');
-        console.log(fixedContent.split('\\n').slice(2, 8).join('\\n'));
+        console.log('\n✅ Fixed formatting:');
+        console.log(fixedContent.split('\n').slice(2, 8).join('\n'));
 
         // Check if formatting is correct
-        const hasCorrectFormatting = fixedContent.includes("case 'A':\\n\\t{") ||
-                                    fixedContent.includes("case 'A':\\n        {");
+        const hasCorrectFormatting = fixedContent.includes("case 'A':\n\t{") ||
+                                    fixedContent.includes("case 'A':\n        {");
 
-        console.log('\\n📊 Test Results:');
+        console.log('\n📊 Test Results:');
         console.log(`✅ Switch case brace formatting: ${hasCorrectFormatting ? 'PASS' : 'FAIL'}`);
         
         if (hasCorrectFormatting) {
-            console.log('\\n🎉 SUCCESS: Switch case brace formatting rule is working!');
+            console.log('\n🎉 SUCCESS: Switch case brace formatting rule is working!');
             return true;
         } else {
-            console.log('\\n❌ FAILURE: Switch case brace formatting rule is not working.');
+            console.log('\n❌ FAILURE: Switch case brace formatting rule is not working.');
             console.log('Debug - Fixed content:');
             console.log(fixedContent);
             return false;

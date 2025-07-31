@@ -60,6 +60,39 @@ const switchCaseBraceRule = {
 					}
 				});
 			}
+
+			// Check if content inside braces needs proper formatting
+			if (blockStatement.body.length > 0) {
+				const firstStatement = blockStatement.body[0];
+				const firstStatementToken = sourceCode.getFirstToken(firstStatement);
+				
+				// Check if the first statement is on the same line as opening brace
+				if (openingBrace.loc.end.line === firstStatementToken.loc.start.line) {
+					context.report({
+						node: firstStatement,
+						messageId: 'expectedNewlineAfterOpeningBrace',
+						fix(fixer) {
+							// Add newline and proper indentation after opening brace
+							const indentation = '\t'.repeat(getIndentLevel(node) + 2);
+							const fixes = [];
+							
+							// Add newline after opening brace
+							fixes.push(fixer.insertTextAfter(openingBrace, `\n${indentation}`));
+							
+							// Also ensure closing brace is on its own line with proper indentation
+							const lastStatement = blockStatement.body[blockStatement.body.length - 1];
+							const lastToken = sourceCode.getLastToken(lastStatement);
+							const closingBraceIndentation = '\t'.repeat(getIndentLevel(node) + 1);
+							
+							if (lastToken.loc.end.line === closingBrace.loc.start.line) {
+								fixes.push(fixer.insertTextBefore(closingBrace, `\n${closingBraceIndentation}`));
+							}
+							
+							return fixes;
+						}
+					});
+				}
+			}
 		}
 
 		/**
