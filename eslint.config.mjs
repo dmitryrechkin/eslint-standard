@@ -513,10 +513,7 @@ export default function ({
 				'promise/prefer-await-to-callbacks': 'warn',
 				
 				// Import plugin rules
-				'import/no-unresolved': ['error', { 
-					ignore: ['\\.ts$', '\\.tsx$'],
-					caseSensitive: false 
-				}],
+				'import/no-unresolved': 'off', // Too many false positives with TypeScript
 				'import/named': 'error',
 				'import/default': 'error',
 				'import/namespace': 'error',
