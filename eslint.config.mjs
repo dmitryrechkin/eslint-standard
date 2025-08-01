@@ -642,7 +642,7 @@ export default function ({
 				'unicorn/new-for-builtins': 'error',
 				'unicorn/no-abusive-eslint-disable': 'error',
 				'unicorn/no-array-callback-reference': 'error',
-				'unicorn/no-array-for-each': 'error',
+				'unicorn/no-array-for-each': 'off', // Conflicts with functional/no-loop-statements - was converting forEach to for...of
 				'unicorn/no-array-method-this-argument': 'error',
 				'unicorn/no-array-push-push': 'error',
 				'unicorn/no-array-reduce': 'warn',
@@ -774,7 +774,7 @@ export default function ({
 				'functional/functional-parameters': 'off', // Too restrictive
 				'functional/no-return-void': 'off', // Allow void returns
 				'functional/no-conditional-statements': 'off', // Too restrictive
-				'functional/no-loop-statements': 'warn', // Encourage functional alternatives
+				'functional/no-loop-statements': 'off', // Allow both loops and functional methods - choose based on use case
 				'functional/immutable-data': ['warn', {
 					ignoreImmediateMutation: true,
 					ignoreAccessorPattern: [
