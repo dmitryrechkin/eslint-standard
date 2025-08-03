@@ -32,9 +32,9 @@ export class TestClass implements SomeInterface
   private initialized = false;
   
   // Wrong order: static field should be before instance fields
-  public static readonly VERSION = '1.0.0';
+  public static VERSION = '1.0.0';
   
-  public readonly name: string;
+  public name: string;
   
   // Wrong order: constructor should come after fields
   constructor(name: string) {
@@ -106,7 +106,7 @@ export class TestClass implements SomeInterface
    */
 export interface TestInterface
 {
-  readonly id: string;
+  id: string;
   name: string;
   
   /**

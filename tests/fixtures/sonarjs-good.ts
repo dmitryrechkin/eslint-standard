@@ -42,8 +42,8 @@ export function formatLowerCase(text: string): string {
  * Avoid duplicate strings by using constants
  */
 export class StringConstants {
-	private static readonly SUCCESS_MESSAGE = 'Operation completed successfully';
-	private static readonly ERROR_MESSAGE = 'An error occurred during processing';
+	private static SUCCESS_MESSAGE = 'Operation completed successfully';
+	private static ERROR_MESSAGE = 'An error occurred during processing';
 	
 	public success(): string {
 		return StringConstants.SUCCESS_MESSAGE;

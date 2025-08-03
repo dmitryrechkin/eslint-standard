@@ -47,7 +47,7 @@ export function safeCryptoOperations(): Buffer {
  * Safe configuration management
  */
 export class SecureConfig {
-	private readonly config: any;
+	private config: any;
 
 	constructor() {
 		// Load config from environment variables

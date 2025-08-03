@@ -8,16 +8,16 @@ import type { SomeInterface } from './interfaces';
 export interface TypeFreshdeskProviderSpecific
 {
 	/** Freshdesk API key for authentication */
-	readonly apiKey: string;
+	apiKey: string;
 
 	/** Freshdesk domain (subdomain only, without .freshdesk.com) */
-	readonly domain: string;
+	domain: string;
 
 	/** Optional webhook secret for validating incoming webhooks */
-	readonly webhookSecret?: string;
+	webhookSecret?: string;
 
 	/** Optional custom headers to send with requests */
-	readonly headers?: Record<string, string>;
+	headers?: Record<string, string>;
 }
 
 
@@ -110,8 +110,8 @@ export class TestClass implements SomeInterface
  */
 export interface TestInterface
 {
-	readonly id: string;
-	readonly name: string;
+	id: string;
+	name: string;
 
 	/**
 	 * Method with wrong JSDoc alignment
@@ -151,7 +151,7 @@ export function formatString(input: string, options?: { readonly uppercase?: boo
 }
 
 // Missing JSDoc for arrow function - should be added
-export const processData = (data: readonly string[]): readonly string[] =>
+export const processData = (data: readonly string[]): string[] =>
 {
 	return data.map(item => item.trim()).filter(Boolean);
 };

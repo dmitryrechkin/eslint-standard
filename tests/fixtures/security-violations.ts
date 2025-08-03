@@ -69,9 +69,9 @@ export function testCryptoViolations(): void {
  */
 export class SecretsViolations {
 	// no-secrets/no-secrets
-	private readonly apiKey = 'AKIA1234567890123456'; // AWS-like key
-	private readonly githubToken = 'ghp_1234567890abcdef1234567890abcdef123456'; // GitHub token
-	private readonly jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'; // JWT
+	private apiKey = 'AKIA1234567890123456'; // AWS-like key
+	private githubToken = 'ghp_1234567890abcdef1234567890abcdef123456'; // GitHub token
+	private jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'; // JWT
 
 	public authenticateUser(): void {
 		// More secrets

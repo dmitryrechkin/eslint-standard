@@ -41,7 +41,7 @@ export function consistentDestructuring(): void {
  * Proper custom error definition
  */
 export class ProperCustomError extends Error {
-	public readonly code: string;
+	public code: string;
 	
 	constructor(message: string, code: string) {
 		super(message);

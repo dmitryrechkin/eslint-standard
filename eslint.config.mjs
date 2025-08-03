@@ -206,20 +206,14 @@ export default function ({
 					{
 						selector: 'variable',
 						format: ['camelCase'],
-						leadingUnderscore: 'forbid',
-						custom: {
-							regex: '^(data|info|item|obj|object|val|value|temp|tmp|res|result|ret|param|params|arg|args|opt|options|config|cfg|ctx|context|e|err|error|cb|callback|fn|func|handler|util|utils|helper|helpers|mgr|manager|svc|service|ctrl|controller|comp|component|elem|element|str|string|num|number|bool|boolean|arr|array|list|items|dict|map|hash|i|j|k|n|x|y|z)$',
-							match: false
-						}
+						leadingUnderscore: 'forbid'
+						// Removed overly restrictive generic name restrictions - allow result, config, data, etc.
 					},
 					{
 						selector: 'function',
 						format: ['camelCase'],
-						leadingUnderscore: 'forbid',
-						custom: {
-							regex: '^(create|make|get|set|update|delete|remove|add|init|load|save|fetch|find|search|check|validate|handle|process|execute|run|start|stop|open|close|read|write|parse|format|convert|transform|build|render|draw|calculate|compute|generate|send|receive|submit|cancel|reset|clear|test|log|debug|trace|info|warn|error|show|hide|enable|disable|toggle|select|click|focus|blur|scroll|resize|move|copy|paste|cut|undo|redo|forward|back|up|down|left|right|first|last|next|prev|push|pop|shift|unshift|splice|slice|concat|join|split|replace|trim|pad|truncate|wrap|unwrap|escape|unescape|encode|decode|encrypt|decrypt|compress|decompress|serialize|deserialize|clone|merge|extend|assign|bind|unbind|on|off|once|emit|trigger|listen|unlisten|subscribe|unsubscribe|publish|unpublish|attach|detach|append|prepend|insert|inject|extract|filter|map|reduce|forEach|some|every|find|findIndex|indexOf|lastIndexOf|includes|contains|has|is|equals|compare|match|test|verify|assert|ensure|require|expect|should|must|can|may|might|will|shall|would|could)$',
-							match: false
-						}
+						leadingUnderscore: 'forbid'
+						// Removed overly restrictive verb restrictions - allow common function names
 					},
 					{
 						selector: 'method',
@@ -549,12 +543,7 @@ export default function ({
 				'import/exports-last': 'off',
 				'import/no-duplicates': 'error',
 				'import/no-namespace': 'off',
-				'import/extensions': ['error', 'ignorePackages', {
-					js: 'never',
-					jsx: 'never',
-					ts: 'never',
-					tsx: 'never'
-				}],
+				'import/extensions': 'off', // Disabled - TypeScript handles this, causes issues with test files and relative imports
 				'import/newline-after-import': 'error',
 				'import/prefer-default-export': 'off',
 				'import/max-dependencies': ['warn', { max: 20 }],
@@ -766,25 +755,30 @@ export default function ({
 				'regexp/prefer-star-quantifier': 'error',
 				'regexp/prefer-w': 'error',
 				
-				// Functional plugin rules - Immutability and functional programming
-				'functional/no-let': 'warn', // Encourage const
-				'functional/prefer-readonly-type': 'warn', // Readonly arrays/objects
+				// Functional plugin rules - Pragmatic immutability and functional programming
+				'functional/no-let': 'off', // Disabled - prefer-const rule is smarter and less prone to false positives
+				'functional/prefer-readonly-type': ['warn', {
+					allowLocalMutation: true,      // Allow local mutations for practical development
+					allowMutableReturnType: true,  // Allow mutable return types
+					checkImplicit: false,          // Don't check implicit types
+					ignoreInterface: true,         // Allow mutable interfaces
+					ignorePattern: [
+						'^Type.*Event$',            // Allow mutable event types (e.g., TypePaymentEvent)
+						'^Type.*Request$',          // Allow mutable request types
+						'^Type.*Response$',         // Allow mutable response types  
+						'^Type.*Builder$',          // Allow mutable builder types
+						'^Type.*Config$',           // Allow mutable config types
+						'^Type.*Options$',          // Allow mutable options types
+						'^Type.*Params$'            // Allow mutable parameter types
+					]
+				}],
 				'functional/no-method-signature': 'off', // Allow method signatures in interfaces
 				'functional/no-expression-statements': 'off', // Too restrictive for most code
 				'functional/functional-parameters': 'off', // Too restrictive
 				'functional/no-return-void': 'off', // Allow void returns
 				'functional/no-conditional-statements': 'off', // Too restrictive
 				'functional/no-loop-statements': 'off', // Allow both loops and functional methods - choose based on use case
-				'functional/immutable-data': ['warn', {
-					ignoreImmediateMutation: true,
-					ignoreAccessorPattern: [
-						'**.current', 
-						'**.ref',
-						'this.**',        // Allow mutations to class properties
-						'this[*].**',     // Allow mutations to class indexed properties
-						'global.**'       // Allow mutations to global objects (test mocking)
-					]
-				}],
+				'functional/immutable-data': 'off', // Too restrictive for practical JavaScript/TypeScript development patterns
 				'functional/no-throw-statements': 'off', // Allow throwing errors
 				'functional/no-try-statements': 'off', // Allow try-catch
 				'functional/no-promise-reject': 'off', // Allow promise rejection
