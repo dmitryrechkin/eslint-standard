@@ -82,7 +82,13 @@ export default function ({
 				'@stylistic/brace-style': ['error', 'allman', { allowSingleLine: false }],
 				'@stylistic/block-spacing': ['error', 'never'], // Enforce consistent spacing inside blocks
 				indent: 'off', // Disabled to avoid conflicts with @stylistic/indent and our JSDoc plugin
-				'@stylistic/indent': ['error', 'tab', { SwitchCase: 1 }],
+				'@stylistic/indent': ['error', 'tab', { 
+					SwitchCase: 1,
+					ignoredNodes: [
+						'ImportDeclaration', // Fix for maximum call stack issue with complex imports
+						'TSTypeReference' // Fix for TypeScript type references causing recursion
+					]
+				}],
 				quotes: 'off', // Disabled in favor of @stylistic/quotes
 				'@stylistic/quotes': ['error', 'single'],
 				semi: 'off', // Disabled in favor of @stylistic/semi
