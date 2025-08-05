@@ -763,21 +763,7 @@ export default function ({
 				
 				// Functional plugin rules - Pragmatic immutability and functional programming
 				'functional/no-let': 'off', // Disabled - prefer-const rule is smarter and less prone to false positives
-				'functional/prefer-readonly-type': ['warn', {
-					allowLocalMutation: true,      // Allow local mutations for practical development
-					allowMutableReturnType: true,  // Allow mutable return types
-					checkImplicit: false,          // Don't check implicit types
-					ignoreInterface: true,         // Allow mutable interfaces
-					ignorePattern: [
-						'^Type.*Event$',            // Allow mutable event types (e.g., TypePaymentEvent)
-						'^Type.*Request$',          // Allow mutable request types
-						'^Type.*Response$',         // Allow mutable response types  
-						'^Type.*Builder$',          // Allow mutable builder types
-						'^Type.*Config$',           // Allow mutable config types
-						'^Type.*Options$',          // Allow mutable options types
-						'^Type.*Params$'            // Allow mutable parameter types
-					]
-				}],
+				'functional/prefer-readonly-type': 'off', // Disabled - too aggressive, breaks compilation and practical code patterns
 				'functional/no-method-signature': 'off', // Allow method signatures in interfaces
 				'functional/no-expression-statements': 'off', // Too restrictive for most code
 				'functional/functional-parameters': 'off', // Too restrictive
