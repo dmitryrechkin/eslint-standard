@@ -802,7 +802,7 @@ export default function ({
 					'error',
 					{
 						parser: 'typescript',
-						plugins: ['prettier-plugin-brace-style'],
+						plugins: [import.meta.resolve('prettier-plugin-brace-style')],
 						braceStyle: 'allman'
 					}
 				]
@@ -816,7 +816,7 @@ export default function ({
 					'error',
 					{
 						parser: 'astro',
-						plugins: ['prettier-plugin-astro']
+						plugins: [import.meta.resolve('prettier-plugin-astro')]
 					}
 				]
 			}
