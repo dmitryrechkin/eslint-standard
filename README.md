@@ -1,6 +1,6 @@
 # @dmitryrechkin/eslint-standard
 
-A comprehensive ESLint configuration package with TypeScript support, featuring Prettier integration and industry-standard rules.
+A comprehensive ESLint configuration package with TypeScript support, featuring **Prettier integration with Allman brace style** and industry-standard rules for maximum code quality.
 
 ## 🚀 Quick Start
 
@@ -101,10 +101,20 @@ npx @dmitryrechkin/eslint-standard check-deps --install
 - **Performance**: Avoid performance anti-patterns
 
 ### Code Style & Formatting
-- **Brace Style**: Allman style (braces on new lines) via Prettier
-- **Indentation**: Tabs with consistent spacing
+- **Prettier Integration**: Automatic code formatting with industry-standard plugins
+- **Brace Style**: Allman style (braces on new lines) via `prettier-plugin-brace-style`
+- **Indentation**: Tabs (4-space width) for accessibility and user preference
+- **Quotes**: Single quotes for consistency
 - **Import Organization**: Automatic import sorting and grouping
-- **JSDoc**: Required documentation with proper formatting
+- **JSDoc**: Required documentation with proper alignment and formatting
+
+### Code Complexity & Architecture
+- **Function Complexity**: Max 10 cyclomatic complexity (industry standard)
+- **Cognitive Complexity**: Max 15 (SonarJS) for maintainable code
+- **Function Length**: Max 100 lines (300 for tests) following clean code principles
+- **File Length**: Max 300 lines (500 for tests) for focused modules
+- **Function Parameters**: Max 7 parameters (allows dependency injection patterns)
+- **Nesting Depth**: Max 3 levels to prevent callback hell
 
 ### Modern JavaScript/TypeScript
 - **ES2020+ Features**: Prefer modern syntax and APIs
@@ -124,6 +134,40 @@ npx @dmitryrechkin/eslint-standard check-deps --install
 | Console statements | Warning | Warning | Error |
 | Return type hints | Error | Error | Explicit |
 | Type safety | High | High | Very High |
+
+## 📈 Industry Standards Comparison
+
+| Metric | This Package | Google | Airbnb | SonarQube | Clean Code |
+|--------|--------------|--------|---------|-----------|------------|
+| Max Parameters | 7 | 4 | No limit* | 7 | 3-4 |
+| Max Function Lines | 100 | 50 | No limit | 200 | 20 |
+| Max File Lines | 300 | 2000 | 2500 | 1000 | 300 |
+| Cyclomatic Complexity | 10 | 10 | No limit | 10 | 5-10 |
+| Max Nesting | 3 levels | 3 levels | No limit | 3 levels | 2-3 levels |
+| Brace Style | Allman | 1TBS | 1TBS | Configurable | Any |
+| Indentation | Tabs (4) | Spaces (2) | Spaces (2) | Configurable | Spaces (4) |
+
+*Airbnb recommends objects for >3 parameters
+
+## 🎨 Prettier Integration Features
+
+This package includes seamless **Prettier integration** that handles all formatting automatically:
+
+### Supported File Types
+- **TypeScript/JavaScript**: `.ts`, `.js`, `.tsx`, `.jsx` with Allman brace style
+- **Astro**: `.astro` files with optimized formatting via `prettier-plugin-astro`
+
+### Automatic Formatting
+- **Allman Brace Style**: All braces on new lines for maximum readability
+- **Single Quotes**: Consistent string quoting throughout codebase  
+- **Tab Indentation**: Accessible indentation with 4-space tab width
+- **Semicolons**: Always required for statement clarity
+- **No Trailing Commas**: Clean object/array formatting
+
+### ESLint-Prettier Harmony
+- All conflicting ESLint formatting rules are **automatically disabled**
+- Prettier handles formatting, ESLint handles code quality
+- **No configuration conflicts** - works out of the box
 
 ## 🔧 External Tools Integration
 

@@ -349,6 +349,11 @@ export default function ({
 						leadingUnderscore: 'forbid',
 					},
 					{
+						selector: 'objectLiteralProperty',
+						format: ['camelCase', 'UPPER_CASE'],
+						leadingUnderscore: 'forbid',
+					},
+					{
 						selector: 'enumMember',
 						format: ['camelCase', 'UPPER_CASE'],
 						leadingUnderscore: 'forbid',
@@ -377,7 +382,7 @@ export default function ({
 					IIFEs: true
 				}],
 				'max-statements': ['error', 20], // Max 20 statements per function
-				'max-params': ['error', 4], // Max 4 parameters per function
+				'max-params': ['error', 7], // Max 7 parameters per function
 				'max-depth': ['error', { max: 3 }], // Max 3 levels of block nesting
 				'max-nested-callbacks': ['error', 3], // Max 3 levels of callback nesting
 				'max-lines': ['warn', {
@@ -395,7 +400,7 @@ export default function ({
 					ignoreComments: true
 				}],
 				'max-statements-per-line': ['error', { max: 1 }],
-				'@typescript-eslint/max-params': ['error', { max: 4 }], // TypeScript-aware version
+				'@typescript-eslint/max-params': ['error', { max: 7 }], // TypeScript-aware version
 				'no-else-return': ['error', { allowElseIf: false }], // Encourage early returns
 				'no-lonely-if': 'error', // Avoid single if in else block
 				'no-nested-ternary': 'error', // Avoid complex ternary operators
@@ -848,6 +853,22 @@ export default function ({
 				'functional/immutable-data': 'off',          // Test mocking requires object mutations
 				'security/detect-non-literal-fs-filename': 'off', // Tests legitimately need dynamic file paths
 				'unicorn/prefer-module': 'off',              // Tests may need __dirname for reliable paths
+				
+				// Relax complexity rules for test files
+				'max-lines-per-function': ['error', {
+					max: 300,
+					skipBlankLines: true,
+					skipComments: true,
+					IIFEs: true
+				}],
+				'max-lines': ['warn', {
+					max: 500,
+					skipBlankLines: true,
+					skipComments: true
+				}],
+				'complexity': ['error', 20], // Higher complexity allowed in tests
+				'max-statements': ['error', 40], // More statements allowed in test functions
+				'sonarjs/cognitive-complexity': ['error', 30], // Higher cognitive complexity for tests
 				
 				// Keep as warnings - still worth improving when possible
 				'unicorn/no-null': 'off',                    // APIs often use null, but const can be better
