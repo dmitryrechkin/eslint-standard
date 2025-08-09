@@ -130,12 +130,16 @@ export default function ({
 							'index-signature',
 							'static-property',
 							'property',
+							'protected-static-property',
 							'protected-property',
+							'private-static-property',
 							'private-property',
 							'constructor',
 							'static-method',
 							'method',
+							'protected-static-method',
 							'protected-method',
+							'private-static-method',
 							'private-method'
 						]
 					}
