@@ -1,6 +1,10 @@
-const { ESLint } = require('eslint');
-const path = require('path');
-const fs = require('fs');
+import { ESLint } from 'eslint';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Create a test file with the exact code structure from HappySupport
 const testCode = `

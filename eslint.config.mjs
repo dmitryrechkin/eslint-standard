@@ -18,7 +18,10 @@ import unicornPlugin from 'eslint-plugin-unicorn';
 import noSecretsPlugin from 'eslint-plugin-no-secrets';
 import regexpPlugin from 'eslint-plugin-regexp';
 import functionalPlugin from 'eslint-plugin-functional';
-
+// eslint-disable-next-line import/no-extraneous-dependencies
+import prettierConfig from 'eslint-config-prettier';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import prettierPlugin from 'eslint-plugin-prettier';
 export default function ({
 	tsconfigPath = './tsconfig.json',
 	ignores = [],
@@ -30,8 +33,10 @@ export default function ({
 		{
 			ignores: ['node_modules/**', 'dist/**', ...ignores],
 		},
+		// Add Prettier integration
+		prettierConfig,
 		{
-			files: ['**/*.{js,jsx,ts,tsx}', ...files],
+			files: ['**/*.{js,ts}', ...files], // Exclude jsx, tsx, and astro files from main config
 			languageOptions: {
 				parser: tsParser,
 				parserOptions: {
@@ -59,6 +64,7 @@ export default function ({
 				'no-secrets': noSecretsPlugin,
 				'regexp': regexpPlugin,
 				'functional': functionalPlugin,
+				'prettier': prettierPlugin,
 				...plugins,
 			},
 			settings: {
@@ -73,6 +79,11 @@ export default function ({
 				'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
 			},
 			rules: {
+				// Prettier integration
+				'prettier/prettier': 'error',
+				// Disable rules that conflict with prettier
+				'switch-case-brace/switch-case-brace-style': 'off',
+				
 				// Original @dmitryrechkin/eslint-standard rules
 				'@typescript-eslint/explicit-function-return-type': 'error',
 				'@typescript-eslint/no-explicit-any': 'error', // Ban 'any' type for type safety
@@ -540,7 +551,10 @@ export default function ({
 					devDependencies: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}', '**/test/**', '**/tests/**', '**/__tests__/**']
 				}],
 				'import/no-mutable-exports': 'error',
-				'import/no-unused-modules': 'off', // Disabled due to .eslintrc requirement in flat config
+				'import/no-unused-modules': ['error', {
+					missingExports: true, // Find files with no exports
+					unusedExports: true   // Find unused exports
+				}],
 				'import/unambiguous': 'off',
 				'import/no-commonjs': 'off',
 				'import/no-amd': 'error',
@@ -780,12 +794,39 @@ export default function ({
 				'unicorn/prevent-abbreviations': 'off', // Allow abbreviations for domain-specific terms
 				
 				// Allow custom rules to be added
-				...rules,
+				...rules
 			},
+		},
+		// Prettier config for TypeScript/JavaScript files with Allman brace style
+		{
+			files: ['**/*.{tsx,jsx,ts,js}'],
+			rules: {
+				'prettier/prettier': [
+					'error',
+					{
+						parser: 'typescript',
+						plugins: ['prettier-plugin-brace-style'],
+						braceStyle: 'allman'
+					}
+				]
+			}
+		},
+		// Prettier config for Astro files
+		{
+			files: ['**/*.astro'],
+			rules: {
+				'prettier/prettier': [
+					'error',
+					{
+						parser: 'astro',
+						plugins: ['prettier-plugin-astro']
+					}
+				]
+			}
 		},
 		// Test file specific overrides
 		{
-			files: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}', '**/tests/**/*.{js,jsx,ts,tsx}'],
+			files: ['**/*.test.{js,ts}', '**/*.spec.{js,ts}', '**/tests/**/*.{js,ts}'],
 			ignores: ['**/tests/fixtures/**/*'], // Don't apply test overrides to fixture files
 			rules: {
 				// Disable function scoping rule for test helpers

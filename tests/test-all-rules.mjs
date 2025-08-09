@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 console.log('🚀 Running All ESLint Standard Tests\n');
 console.log('=' .repeat(50));
@@ -10,32 +14,32 @@ console.log('=' .repeat(50));
 const tests = [
 	{
 		name: 'Formatting & Organization',
-		script: 'test-runner.js',
+		script: 'test-runner.mjs',
 		description: 'Tests import sorting, JSDoc generation, class member ordering'
 	},
 	{
 		name: 'Complexity Rules',
-		script: 'test-complexity-rules.js',
+		script: 'test-complexity-rules.mjs',
 		description: 'Tests cyclomatic complexity, function length, nesting depth, etc.'
 	},
 	{
 		name: 'Safety Rules',
-		script: 'test-safety-rules.js',
+		script: 'test-safety-rules.mjs',
 		description: 'Tests promise safety, type safety, security, and error handling'
 	},
 	{
 		name: 'Security Rules',
-		script: 'test-security-rules.js',
+		script: 'test-security-rules.mjs',
 		description: 'Tests security plugin rules and secret detection'
 	},
 	{
 		name: 'SonarJS Rules',
-		script: 'test-sonarjs-rules.js',
+		script: 'test-sonarjs-rules.mjs',
 		description: 'Tests code smells, cognitive complexity, and maintainability'
 	},
 	{
 		name: 'Unicorn Rules',
-		script: 'test-unicorn-rules.js',
+		script: 'test-unicorn-rules.mjs',
 		description: 'Tests modern JavaScript patterns and best practices'
 	}
 ];

@@ -1,32 +1,36 @@
 {
 	"name": "@dmitryrechkin/eslint-standard",
 	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-	"version": "1.4.2",
+	"version": "1.4.3",
 	"main": "eslint.config.mjs",
+	"exports": {
+		".": "./eslint.config.mjs"
+	},
 	"bin": {
 		"eslint-standard": "./src/cli/index.mjs"
 	},
 	"files": [
 		"eslint.config.mjs",
 		"src/",
-		"docs/",
 		"README.md",
 		"LICENSE"
 	],
 	"scripts": {
 		"postinstall": "node src/cli/postinstall.mjs",
 		"package:publish": "npm publish --access public",
-		"test": "node tests/test-all-rules.js",
-		"test:all": "node tests/test-all-rules.js",
-		"test:formatting": "node tests/test-runner.js",
-		"test:complexity": "node tests/test-complexity-rules.js",
-		"test:safety": "node tests/test-safety-rules.js",
-		"test:security": "node tests/test-security-rules.js",
-		"test:sonarjs": "node tests/test-sonarjs-rules.js",
-		"test:unicorn": "node tests/test-unicorn-rules.js",
-		"test:switch-case": "node tests/test-switch-case-simple.js",
-		"test:cli": "node tests/test-cli.js",
-		"test:install": "node tests/test-install-simulation.js"
+		"test": "node tests/test-all-rules.mjs",
+		"test:all": "node tests/test-all-rules.mjs",
+		"test:formatting": "node tests/test-runner.mjs",
+		"test:simple": "node tests/simple-test.mjs",
+		"test:debug": "node tests/debug-test.mjs",
+		"test:complexity": "node tests/test-complexity-rules.mjs",
+		"test:safety": "node tests/test-safety-rules.mjs",
+		"test:security": "node tests/test-security-rules.mjs",
+		"test:sonarjs": "node tests/test-sonarjs-rules.mjs",
+		"test:unicorn": "node tests/test-unicorn-rules.mjs",
+		"test:switch-case": "node tests/test-switch-case-simple.mjs",
+		"test:cli": "node tests/test-cli.mjs",
+		"test:install": "node tests/test-install-simulation.mjs"
 	},
 	"keywords": [],
 	"author": "",
@@ -36,6 +40,7 @@
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
 		"@typescript-eslint/parser": "^8.0.0",
 		"eslint": "^9.0.0",
+		"eslint-config-prettier": "^10.0.0",
 		"eslint-plugin-functional": "^7.0.0",
 		"eslint-plugin-import": "^2.0.0",
 		"eslint-import-resolver-typescript": "^3.0.0",
@@ -43,19 +48,23 @@
 		"eslint-plugin-jsx-a11y": "^6.0.0",
 		"eslint-plugin-no-secrets": "^1.0.0",
 		"eslint-plugin-perfectionist": "^4.0.0",
+		"eslint-plugin-prettier": "^5.0.0",
 		"eslint-plugin-promise": "^7.0.0",
 		"eslint-plugin-regexp": "^2.0.0",
 		"eslint-plugin-security": "^3.0.0",
 		"eslint-plugin-simple-import-sort": "^12.0.0",
 		"eslint-plugin-sonarjs": "^3.0.0",
 		"eslint-plugin-unicorn": "^56.0.0",
-		"eslint-plugin-unused-imports": "^4.0.0"
+		"eslint-plugin-unused-imports": "^4.0.0",
+		"prettier-plugin-astro": "^0.14.0",
+		"prettier-plugin-brace-style": "^0.8.0"
 	},
 	"devDependencies": {
 		"@stylistic/eslint-plugin": "^5.2.2",
 		"@typescript-eslint/eslint-plugin": "^8.38.0",
 		"@typescript-eslint/parser": "^8.38.0",
 		"eslint": "^9.32.0",
+		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-functional": "^7.3.0",
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-import-resolver-typescript": "^3.6.3",
@@ -63,12 +72,15 @@
 		"eslint-plugin-jsx-a11y": "^6.10.2",
 		"eslint-plugin-no-secrets": "^1.1.2",
 		"eslint-plugin-perfectionist": "^4.15.0",
+		"eslint-plugin-prettier": "^5.5.3",
 		"eslint-plugin-promise": "^7.2.1",
 		"eslint-plugin-regexp": "^2.9.0",
 		"eslint-plugin-security": "^3.0.1",
 		"eslint-plugin-simple-import-sort": "^12.1.1",
 		"eslint-plugin-sonarjs": "^3.0.4",
 		"eslint-plugin-unicorn": "^56.0.1",
-		"eslint-plugin-unused-imports": "^4.1.4"
+		"eslint-plugin-unused-imports": "^4.1.4",
+		"prettier-plugin-astro": "^0.14.1",
+		"prettier-plugin-brace-style": "^0.8.1"
 	}
 }

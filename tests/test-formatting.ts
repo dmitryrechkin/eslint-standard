@@ -1,8 +1,8 @@
 // Test file with various formatting issues that should be auto-fixed
-import type { BaseConfig } from '../config';
-import { EnumErrorCode } from '../enums';
-import { TypeResponse } from '../types';
-import type { SomeInterface } from './interfaces';
+import type { BaseConfig } from "../config";
+import { EnumErrorCode } from "../enums";
+import { TypeResponse } from "../types";
+import type { SomeInterface } from "./interfaces";
 
 // Missing JSDoc - should be added
 export interface TypeFreshdeskProviderSpecific
@@ -20,7 +20,6 @@ export interface TypeFreshdeskProviderSpecific
 	headers?: Record<string, string>;
 }
 
-
 /**
  * Test class with misaligned JSDoc comments and wrong member ordering
  * @class TestClass
@@ -29,79 +28,81 @@ export interface TypeFreshdeskProviderSpecific
  */
 export class TestClass implements SomeInterface
 {
-	// Wrong order: static field should be before instance fields
-	public static readonly VERSION = '1.0.0';
+  // Wrong order: private field should be after public
+  private initialized = false;
 
-	public readonly name: string;
+  // Wrong order: static field should be before instance fields
+  public static VERSION = '1.0.0';
 
-	// Wrong order: private field should be after public
-	private readonly initialized = false;
+  public name: string;
 
-	// Wrong order: constructor should come after fields
-	constructor(name: string)
+  // Wrong order: constructor should come after fields
+  constructor(name: string)
 	{
-		this.name = name;
-	}
+    this.name = name;
+  }
 
-	/**
-	 * Static method with misaligned JSDoc
-	 * @returns Version string
-	 */
-	public static getVersion(): string
-	{
-		return TestClass.VERSION;
-	}
+  // Wrong order: private method before public - Missing JSDoc
+  private validateConfig(config: BaseConfig): boolean
+  {
+    return !!config;
+  }
 
-	/**
+  /**
 	 * Public method with misaligned JSDoc
 	 * @param config - The configuration
 	 * @returns Promise with response
 	 */
-	public async initialize(config: BaseConfig): Promise<TypeResponse<void>>
-	{
-		if (!this.validateConfig(config))
+  public async initialize(config: BaseConfig): Promise<TypeResponse<void>>
+  {
+    if (!this.validateConfig(config))
 		{
-			return {
-				success: false,
-				messages: [{
-					message: 'Invalid configuration',
-					type: 'error',
-					code: EnumErrorCode.INVALID_CONFIG
-				}]
-			};
-		}
+      return {
+        success: false,
+        messages: [
+					{
+						message: 'Invalid configuration',
+						type: 'error',
+						code: EnumErrorCode.INVALID_CONFIG
+					},
+				],
+      };
+    }
 
-		this.initialized = true;
-		return { success: true };
-	}
+    this.initialized = true;
+    return { success: true };
+  }
 
-	// Getter placed among methods (correct placement)
-	public get isInitialized(): boolean
+  // Getter placed among methods (correct placement)
+  public get isInitialized(): boolean
 	{
-		return this.initialized;
-	}
+    return this.initialized;
+  }
 
-	/**
+  /**
+	 * Static method with misaligned JSDoc
+	 * @returns Version string
+	 */
+  public static getVersion(): string
+  {
+    return TestClass.VERSION;
+  }
+
+  // Wrong order: protected method between public methods - Missing JSDoc
+  protected performCleanup(): void
+  {
+    this.initialized = false;
+  }
+
+  /**
 	 * Another public method with wrong JSDoc indentation
 	 * @param value - Input value
 	 * @returns Processed value
 	 */
-	public processValue(value: string): string
-	{
-		return value.trim().toLowerCase();
-	}
-
-	// Wrong order: protected method between public methods - Missing JSDoc
-	protected performCleanup(): void
-	{
-		this.initialized = false;
-	}
-
-	// Wrong order: private method before public - Missing JSDoc
-	private validateConfig(config: BaseConfig): boolean
-	{
-		return !!config;
-	}
+  public processValue(value: string): string
+  {
+    return value.trim().toLowerCase();
+  }
 }
 
 /**
@@ -110,15 +111,15 @@ export class TestClass implements SomeInterface
  */
 export interface TestInterface
 {
-	id: string;
-	name: string;
+  id: string;
+  name: string;
 
-	/**
+  /**
 	 * Method with wrong JSDoc alignment
 	 * @param data - Input data
 	 * @returns Processed result
 	 */
-	process(data: unknown): Promise<TypeResponse<string>>;
+  process(data: unknown): Promise<TypeResponse<string>>;
 }
 
 /**
@@ -126,9 +127,9 @@ export interface TestInterface
  */
 export enum TestEnum
 {
-	FIRST = 'first',
-	SECOND = 'second',
-	THIRD = 'third'
+  FIRST = 'first',
+  SECOND = 'second',
+  THIRD = 'third',
 }
 
 /**
@@ -138,34 +139,37 @@ export enum TestEnum
  * @param options.uppercase
  * @returns Formatted output
  */
-export function formatString(input: string, options?: { readonly uppercase?: boolean }): string
+export function formatString(
+	input: string,
+	options?: { uppercase?: boolean }
+): string
 {
-	let result = input.trim();
+  let result = input.trim();
 
-	if (options?.uppercase)
-	{
-		result = result.toUpperCase();
-	}
+  if (options?.uppercase)
+  {
+    result = result.toUpperCase();
+  }
 
-	return result;
+  return result;
 }
 
 // Missing JSDoc for arrow function - should be added
-export const processData = (data: readonly string[]): string[] =>
+export const processData = (data: string[]): string[] =>
 {
-	return data.map(item => item.trim()).filter(Boolean);
+  return data.map((item) => item.trim()).filter(Boolean);
 };
 
 // Missing JSDoc for type alias - should be added
-export type ConfigOptions =
-{
-	readonly debug: boolean;
-	readonly timeout: number;
+export type ConfigOptions = {
+  debug: boolean;
+  timeout: number;
 };
 
 // Missing JSDoc for another enum - should be added
-export enum StatusCode {
-	SUCCESS = 200,
-	NOT_FOUND = 404,
-	ERROR = 500
+export enum StatusCode
+{
+  SUCCESS = 200,
+  NOT_FOUND = 404,
+  ERROR = 500
 }
