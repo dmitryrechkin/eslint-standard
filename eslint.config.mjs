@@ -88,29 +88,23 @@ export default function ({
 				'@typescript-eslint/explicit-function-return-type': 'error',
 				'@typescript-eslint/no-explicit-any': 'error', // Ban 'any' type for type safety
 
-				// Original coding guidelines
-				'brace-style': 'off', // Disabled in favor of @stylistic/brace-style
-				'@stylistic/brace-style': ['error', 'allman', { allowSingleLine: false }],
-				'@stylistic/block-spacing': ['error', 'never'], // Enforce consistent spacing inside blocks
-				indent: 'off', // Disabled to avoid conflicts with @stylistic/indent and our JSDoc plugin
-				'@stylistic/indent': ['error', 'tab', { 
-					SwitchCase: 1,
-					ignoredNodes: [
-						'ImportDeclaration', // Fix for maximum call stack issue with complex imports
-						'TSTypeReference' // Fix for TypeScript type references causing recursion
-					]
-				}],
-				quotes: 'off', // Disabled in favor of @stylistic/quotes
-				'@stylistic/quotes': ['error', 'single'],
-				semi: 'off', // Disabled in favor of @stylistic/semi
-				'@stylistic/semi': ['error', 'always'],
+				// Original coding guidelines - formatting rules disabled in favor of prettier
+				'brace-style': 'off', // Handled by prettier-plugin-brace-style
+				'@stylistic/brace-style': 'off', // Handled by prettier-plugin-brace-style
+				'@stylistic/block-spacing': 'off', // Handled by prettier
+				indent: 'off', // Handled by prettier (useTabs: true, tabWidth: 4)
+				'@stylistic/indent': 'off', // Handled by prettier (useTabs: true, tabWidth: 4)
+				quotes: 'off', // Handled by prettier (singleQuote: true)
+				'@stylistic/quotes': 'off', // Handled by prettier (singleQuote: true)
+				semi: 'off', // Handled by prettier (semi: true)
+				'@stylistic/semi': 'off', // Handled by prettier (semi: true)
 				'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-				'no-trailing-spaces': 'off', // Disabled in favor of @stylistic/no-trailing-spaces
-				'@stylistic/no-trailing-spaces': 'error',
-				'eol-last': 'off', // Disabled in favor of @stylistic/eol-last
-				'@stylistic/eol-last': ['error', 'always'],
-				'comma-dangle': 'off', // Disabled in favor of @stylistic/comma-dangle
-				'@stylistic/comma-dangle': ['error', 'never'],
+				'no-trailing-spaces': 'off', // Handled by prettier
+				'@stylistic/no-trailing-spaces': 'off', // Handled by prettier
+				'eol-last': 'off', // Handled by prettier
+				'@stylistic/eol-last': 'off', // Handled by prettier
+				'comma-dangle': 'off', // Handled by prettier (trailingComma: 'none')
+				'@stylistic/comma-dangle': 'off', // Handled by prettier (trailingComma: 'none')
 
 				// Comprehensive naming conventions based on coding standards
 
@@ -803,7 +797,12 @@ export default function ({
 					{
 						parser: 'typescript',
 						plugins: [import.meta.resolve('prettier-plugin-brace-style')],
-						braceStyle: 'allman'
+						braceStyle: 'allman',
+						singleQuote: true,
+						useTabs: true,
+						tabWidth: 4,
+						semi: true,
+						trailingComma: 'none'
 					}
 				]
 			}
@@ -816,7 +815,12 @@ export default function ({
 					'error',
 					{
 						parser: 'astro',
-						plugins: [import.meta.resolve('prettier-plugin-astro')]
+						plugins: [import.meta.resolve('prettier-plugin-astro')],
+						singleQuote: true,
+						useTabs: true,
+						tabWidth: 4,
+						semi: true,
+						trailingComma: 'none'
 					}
 				]
 			}
