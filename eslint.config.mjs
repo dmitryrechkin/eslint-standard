@@ -551,10 +551,7 @@ export default function ({
 					devDependencies: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}', '**/test/**', '**/tests/**', '**/__tests__/**']
 				}],
 				'import/no-mutable-exports': 'error',
-				'import/no-unused-modules': ['error', {
-					missingExports: true, // Find files with no exports
-					unusedExports: true   // Find unused exports
-				}],
+				// 'import/no-unused-modules': 'off', // Disabled - incompatible with flat config, requires legacy .eslintrc
 				'import/unambiguous': 'off',
 				'import/no-commonjs': 'off',
 				'import/no-amd': 'error',
