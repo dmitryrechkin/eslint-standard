@@ -1,4 +1,13 @@
 // eslint.config.mjs
+//
+// ESLint 9.x Flat Config for @dmitryrechkin/eslint-standard
+//
+// For optimal compatibility, pass the prettier plugin from your consuming project:
+//
+// import eslintConfig from "@dmitryrechkin/eslint-standard";
+// import prettierPlugin from "eslint-plugin-prettier";
+// 
+// export default eslintConfig({ prettierPlugin });
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import unusedImportsPlugin from 'eslint-plugin-unused-imports';
@@ -27,8 +36,12 @@ export default function ({
 	ignores = [],
 	files = [],
 	plugins = {},
-	rules = {}
+	rules = {},
+	prettierPlugin: externalPrettierPlugin = undefined
 } = {}) {
+	// Use external prettier plugin if provided, otherwise fallback to bundled one
+	const activePrettierPlugin = externalPrettierPlugin || prettierPlugin;
+	
 	return [
 		{
 			ignores: ['node_modules/**', 'dist/**', ...ignores],
@@ -64,7 +77,7 @@ export default function ({
 				'no-secrets': noSecretsPlugin,
 				'regexp': regexpPlugin,
 				'functional': functionalPlugin,
-				'prettier': prettierPlugin,
+				'prettier': activePrettierPlugin,
 				...plugins,
 			},
 			settings: {
@@ -800,6 +813,9 @@ export default function ({
 		// Prettier config for TypeScript/JavaScript files with Allman brace style
 		{
 			files: ['**/*.{tsx,jsx,ts,js}'],
+			plugins: {
+				'prettier': activePrettierPlugin
+			},
 			rules: {
 				'prettier/prettier': [
 					'error',
@@ -819,6 +835,9 @@ export default function ({
 		// Prettier config for Astro files
 		{
 			files: ['**/*.astro'],
+			plugins: {
+				'prettier': activePrettierPlugin
+			},
 			rules: {
 				'prettier/prettier': [
 					'error',
