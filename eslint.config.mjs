@@ -587,6 +587,7 @@ export default function ({
 				'import/no-anonymous-default-export': 'warn',
 				'import/group-exports': 'off',
 				'import/dynamic-import-chunkname': 'off',
+				'import/order': 'off', // Disabled - conflicts with simple-import-sort plugin
 				
 				// JSX A11y plugin rules (only active for React/JSX files)
 				'jsx-a11y/alt-text': 'error',
