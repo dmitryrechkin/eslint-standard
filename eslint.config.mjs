@@ -211,7 +211,7 @@ export default function ({
 				'jsdoc/valid-types': 'error', // Validate type syntax
 				
 				// Enhanced: Interface brace style
-				'interface-brace/interface-brace-style': 'error',
+				'interface-brace/interface-brace-style': 'off', // Disabled - conflicts with prettier-plugin-brace-style
 				
 				// Enhanced: Switch case brace style - Allman style for case blocks
 				'switch-case-brace/switch-case-brace-style': 'error',
