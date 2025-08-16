@@ -1,7 +1,7 @@
 {
 	"name": "@dmitryrechkin/eslint-standard",
 	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-	"version": "1.5.2",
+	"version": "1.5.3",
 	"main": "eslint.config.mjs",
 	"exports": {
 		".": "./eslint.config.mjs"
@@ -56,7 +56,8 @@
 		"eslint-plugin-unicorn": "^56.0.1",
 		"eslint-plugin-unused-imports": "^4.1.4",
 		"prettier-plugin-astro": "^0.14.1",
-		"prettier-plugin-brace-style": "^0.8.1"
+		"prettier-plugin-brace-style": "^0.8.1",
+		"prettier-plugin-merge": "^0.8.0"
 	},
 	"peerDependencies": {
 		"eslint": "^9.0.0",

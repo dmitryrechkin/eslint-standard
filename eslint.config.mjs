@@ -844,7 +844,12 @@ export default function ({
 					'error',
 					{
 						parser: 'astro',
-						plugins: [import.meta.resolve('prettier-plugin-astro')],
+						plugins: [
+							import.meta.resolve('prettier-plugin-astro'),
+							import.meta.resolve('prettier-plugin-brace-style'),
+							import.meta.resolve('prettier-plugin-merge')
+						],
+						braceStyle: 'allman',
 						singleQuote: true,
 						useTabs: true,
 						tabWidth: 4,
