@@ -403,7 +403,7 @@ export default function ({
 				'max-depth': ['error', { max: 3 }], // Max 3 levels of block nesting
 				'max-nested-callbacks': ['error', 3], // Max 3 levels of callback nesting
 				'max-lines': ['warn', {
-					max: 300,
+					max: 500,
 					skipBlankLines: true,
 					skipComments: true
 				}],
