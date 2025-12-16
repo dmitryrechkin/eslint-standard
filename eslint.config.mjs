@@ -111,7 +111,26 @@ export default function ({
 				'@stylistic/quotes': 'off', // Handled by prettier (singleQuote: true)
 				semi: 'off', // Handled by prettier (semi: true)
 				'@stylistic/semi': 'off', // Handled by prettier (semi: true)
-				'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+				'@typescript-eslint/no-unused-vars': ['error', {
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_',
+					destructuredArrayIgnorePattern: '^_',
+					ignoreRestSiblings: true
+				}],
+
+				// Enhanced local dead code cleanup rules
+				'@typescript-eslint/no-useless-constructor': 'error',
+				'@typescript-eslint/no-empty-function': 'warn',
+				'@typescript-eslint/no-empty-interface': 'warn',
+				'@typescript-eslint/class-methods-use-this': 'error', // Alternative to no-useless-this
+				'@typescript-eslint/no-invalid-this': 'error',
+				'no-undef-init': 'error',
+				'no-unreachable': 'error',
+				'no-constant-condition': 'error',
+				'no-else-return': 'error',
+				'no-return-assign': 'error',
+				'no-var': 'error',
 				'no-trailing-spaces': 'off', // Handled by prettier
 				'@stylistic/no-trailing-spaces': 'off', // Handled by prettier
 				'eol-last': 'off', // Handled by prettier
