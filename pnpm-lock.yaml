@@ -78,6 +78,9 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      prettier-plugin-merge:
+        specifier: ^0.8.0
+        version: 0.8.0(prettier@3.6.2)
 
 packages:
 
@@ -559,6 +562,10 @@ packages:
   define-properties@1.2.1:
     resolution: {integrity: sha512-8QmQKqEASLd5nx0U1B1okLElbUuuttJ/AnYmRXbbbGDWh6uS208EjD4Xqq/I9wK7u0v6O08XhTWnt5XtEbR6Dg==}
     engines: {node: '>= 0.4'}
+
+  diff@5.1.0:
+    resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
+    engines: {node: '>=0.3.1'}
 
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
@@ -1325,6 +1332,12 @@ packages:
         optional: true
       prettier-plugin-svelte:
         optional: true
+
+  prettier-plugin-merge@0.8.0:
+    resolution: {integrity: sha512-4ovlPwwsuKB+NyQNlXrt2P4I/4dx0P2w2iBkYpgjJHFqglMndYbzYWyY5hHTQj0WFhZYeUjsHKRGKxWsf6tvag==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      prettier: ^3
 
   prettier@3.6.2:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
@@ -2136,6 +2149,8 @@ snapshots:
       define-data-property: 1.1.4
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
+
+  diff@5.1.0: {}
 
   doctrine@2.1.0:
     dependencies:
@@ -3019,6 +3034,11 @@ snapshots:
       zod: 3.22.4
     optionalDependencies:
       prettier-plugin-astro: 0.14.1
+
+  prettier-plugin-merge@0.8.0(prettier@3.6.2):
+    dependencies:
+      diff: 5.1.0
+      prettier: 3.6.2
 
   prettier@3.6.2: {}
 

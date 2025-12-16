@@ -41,6 +41,11 @@ const tests = [
 		name: 'Unicorn Rules',
 		script: 'test-unicorn-rules.mjs',
 		description: 'Tests modern JavaScript patterns and best practices'
+	},
+	{
+		name: 'Spacing Rules',
+		script: 'test-spacing-rules.mjs',
+		description: 'Tests code density, blank lines between statements and class members'
 	}
 ];
 
@@ -57,7 +62,7 @@ for (const test of tests) {
 		execSync(`node ${test.script}`, {
 			stdio: 'inherit',
 			cwd: __dirname,
-			timeout: 60000 // 60 second timeout per test
+			timeout: 180000 // 180 second timeout per test (Unicorn takes ~87s, Safety ~53s)
 		});
 		passedTests++;
 		results.push({ name: test.name, status: '✅ PASSED' });

@@ -123,14 +123,31 @@ export default function ({
 				'@typescript-eslint/no-useless-constructor': 'error',
 				'@typescript-eslint/no-empty-function': 'warn',
 				'@typescript-eslint/no-empty-interface': 'warn',
-				'@typescript-eslint/class-methods-use-this': 'error', // Alternative to no-useless-this
 				'@typescript-eslint/no-invalid-this': 'error',
+				'no-unused-private-class-members': 'error', // Catches unused #private ES2022 fields
 				'no-undef-init': 'error',
 				'no-unreachable': 'error',
 				'no-constant-condition': 'error',
 				'no-else-return': 'error',
 				'no-return-assign': 'error',
 				'no-var': 'error',
+
+				// Code spacing rules (autofix) - prevents dense code
+				'@stylistic/padding-line-between-statements': [
+					'error',
+					{ blankLine: 'always', prev: '*', next: 'return' },
+					{ blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+					{ blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+					{ blankLine: 'always', prev: 'directive', next: '*' },
+					{ blankLine: 'always', prev: ['case', 'default'], next: '*' },
+					{ blankLine: 'always', prev: '*', next: ['if', 'switch', 'try', 'while', 'for', 'do'] },
+					{ blankLine: 'always', prev: ['if', 'switch', 'try', 'while', 'for', 'do'], next: '*' },
+					{ blankLine: 'always', prev: '*', next: 'function' },
+					{ blankLine: 'always', prev: 'function', next: '*' },
+					{ blankLine: 'always', prev: 'import', next: '*' },
+					{ blankLine: 'any', prev: 'import', next: 'import' }
+				],
+				'@stylistic/lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
 				'no-trailing-spaces': 'off', // Handled by prettier
 				'@stylistic/no-trailing-spaces': 'off', // Handled by prettier
 				'eol-last': 'off', // Handled by prettier
@@ -711,7 +728,7 @@ export default function ({
 				'unicorn/no-unnecessary-await': 'error',
 				'unicorn/no-unreadable-array-destructuring': 'error',
 				'unicorn/no-unreadable-iife': 'error',
-				'unicorn/no-unsafe-regex': 'error',
+				// 'unicorn/no-unsafe-regex' removed in v62 - covered by regexp/no-super-linear-backtracking
 				'unicorn/no-unused-properties': 'off',
 				'unicorn/no-useless-fallback-in-spread': 'error',
 				'unicorn/no-useless-length-check': 'error',

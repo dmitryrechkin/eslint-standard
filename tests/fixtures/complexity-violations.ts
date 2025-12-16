@@ -165,15 +165,18 @@ export function tooManyStatements(): void {
 	console.log(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u);
 }
 
-// 4. Too many parameters (>4)
+// 4. Too many parameters (>7)
 export function tooManyParams(
 	param1: string,
 	param2: number,
 	param3: boolean,
 	param4: object,
-	param5: string[] // This exceeds the limit
+	param5: string[],
+	param6: number,
+	param7: string,
+	param8: boolean // This exceeds the limit of 7
 ): void {
-	console.log(param1, param2, param3, param4, param5);
+	console.log(param1, param2, param3, param4, param5, param6, param7, param8);
 }
 
 // 5. Too deeply nested (>3 levels)

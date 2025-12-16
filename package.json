@@ -1,7 +1,7 @@
 {
 	"name": "@dmitryrechkin/eslint-standard",
 	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-	"version": "1.5.5",
+	"version": "1.5.6",
 	"main": "eslint.config.mjs",
 	"exports": {
 		".": "./eslint.config.mjs"
@@ -28,6 +28,7 @@
 		"test:security": "node tests/test-security-rules.mjs",
 		"test:sonarjs": "node tests/test-sonarjs-rules.mjs",
 		"test:unicorn": "node tests/test-unicorn-rules.mjs",
+		"test:spacing": "node tests/test-spacing-rules.mjs",
 		"test:switch-case": "node tests/test-switch-case-simple.mjs",
 		"test:cli": "node tests/test-cli.mjs",
 		"test:install": "node tests/test-install-simulation.mjs"
@@ -36,35 +37,35 @@
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
-		"@stylistic/eslint-plugin": "^5.2.2",
-		"@typescript-eslint/eslint-plugin": "^8.38.0",
-		"@typescript-eslint/parser": "^8.38.0",
+		"@stylistic/eslint-plugin": "^5.6.1",
+		"@typescript-eslint/eslint-plugin": "^8.50.0",
+		"@typescript-eslint/parser": "^8.50.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-functional": "^7.3.0",
+		"eslint-import-resolver-typescript": "^4.4.4",
+		"eslint-plugin-functional": "^9.0.2",
 		"eslint-plugin-import": "^2.32.0",
-		"eslint-import-resolver-typescript": "^3.6.3",
-		"eslint-plugin-jsdoc": "^50.8.0",
+		"eslint-plugin-jsdoc": "^61.5.0",
 		"eslint-plugin-jsx-a11y": "^6.10.2",
-		"eslint-plugin-no-secrets": "^1.1.2",
-		"eslint-plugin-perfectionist": "^4.15.0",
+		"eslint-plugin-no-secrets": "^2.2.1",
+		"eslint-plugin-perfectionist": "^4.15.1",
 		"eslint-plugin-prettier": "^5.5.3",
 		"eslint-plugin-promise": "^7.2.1",
-		"eslint-plugin-regexp": "^2.9.0",
+		"eslint-plugin-regexp": "^2.10.0",
 		"eslint-plugin-security": "^3.0.1",
 		"eslint-plugin-simple-import-sort": "^12.1.1",
-		"eslint-plugin-sonarjs": "^3.0.4",
-		"eslint-plugin-unicorn": "^56.0.1",
-		"eslint-plugin-unused-imports": "^4.1.4",
+		"eslint-plugin-sonarjs": "^3.0.5",
+		"eslint-plugin-unicorn": "^62.0.0",
+		"eslint-plugin-unused-imports": "^4.3.0",
 		"prettier-plugin-astro": "^0.14.1",
-		"prettier-plugin-brace-style": "^0.8.1",
-		"prettier-plugin-merge": "^0.8.0"
+		"prettier-plugin-brace-style": "^0.8.2"
 	},
 	"peerDependencies": {
 		"eslint": "^9.0.0",
 		"prettier": "^3.0.0"
 	},
 	"devDependencies": {
-		"eslint": "^9.32.0",
-		"prettier": "^3.6.2"
+		"eslint": "^9.39.2",
+		"prettier": "^3.7.4",
+		"prettier-plugin-merge": "^0.8.0"
 	}
 }

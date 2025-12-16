@@ -73,6 +73,7 @@ export class TestClass implements SomeInterface
 		}
 
 		this.initialized = true;
+
 		return { success: true };
 	}
 
