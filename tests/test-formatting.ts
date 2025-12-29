@@ -162,10 +162,11 @@ export const processData = (data: string[]): string[] =>
 };
 
 // Missing JSDoc for type alias - should be added
-export type ConfigOptions = {
+export interface ConfigOptions
+{
 	debug: boolean;
 	timeout: number;
-};
+}
 
 // Missing JSDoc for another enum - should be added
 export enum StatusCode

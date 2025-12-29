@@ -46,6 +46,11 @@ const tests = [
 		name: 'Spacing Rules',
 		script: 'test-spacing-rules.mjs',
 		description: 'Tests code density, blank lines between statements and class members'
+	},
+	{
+		name: 'Strict Conventions',
+		script: 'test-strict-conventions.mjs',
+		description: 'Tests interface enforcement, service method limits, and naming conventions'
 	}
 ];
 

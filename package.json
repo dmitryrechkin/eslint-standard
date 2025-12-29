@@ -31,7 +31,8 @@
 		"test:spacing": "node tests/test-spacing-rules.mjs",
 		"test:switch-case": "node tests/test-switch-case-simple.mjs",
 		"test:cli": "node tests/test-cli.mjs",
-		"test:install": "node tests/test-install-simulation.mjs"
+		"test:install": "node tests/test-install-simulation.mjs",
+		"test:strict": "node tests/test-strict-conventions.mjs"
 	},
 	"keywords": [],
 	"author": "",

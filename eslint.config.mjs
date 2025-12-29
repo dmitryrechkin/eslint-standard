@@ -27,16 +27,19 @@ import unicornPlugin from 'eslint-plugin-unicorn';
 import noSecretsPlugin from 'eslint-plugin-no-secrets';
 import regexpPlugin from 'eslint-plugin-regexp';
 import functionalPlugin from 'eslint-plugin-functional';
+import standardConventionsPlugin from './src/plugins/standard-conventions.mjs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import prettierConfig from 'eslint-config-prettier';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import prettierPlugin from 'eslint-plugin-prettier';
+
 export default function ({
 	tsconfigPath = './tsconfig.json',
 	ignores = [],
 	files = [],
 	plugins = {},
 	rules = {},
+	strict = false,
 	prettierPlugin: externalPrettierPlugin = undefined
 } = {}) {
 	// Use external prettier plugin if provided, otherwise fallback to bundled one
@@ -77,6 +80,7 @@ export default function ({
 				'no-secrets': noSecretsPlugin,
 				'regexp': regexpPlugin,
 				'functional': functionalPlugin,
+				'standard-conventions': standardConventionsPlugin,
 				'prettier': activePrettierPlugin,
 				...plugins,
 			},
@@ -99,6 +103,7 @@ export default function ({
 				
 				// Original @dmitryrechkin/eslint-standard rules
 				'@typescript-eslint/explicit-function-return-type': 'error',
+				'@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
 				'@typescript-eslint/no-explicit-any': 'error', // Ban 'any' type for type safety
 
 				// Original coding guidelines - formatting rules disabled in favor of prettier
@@ -843,6 +848,81 @@ export default function ({
 				'unicorn/prefer-query-selector': 'off', // Allow different DOM query methods
 				'unicorn/prevent-abbreviations': 'off', // Allow abbreviations for domain-specific terms
 				
+				...(strict ? {
+					// Standard conventions for services, transformers, and function naming
+					'standard-conventions/service-single-public-method': 'error',
+					'standard-conventions/transformer-single-public-method': 'error',
+					'standard-conventions/function-name-match-filename': 'error',
+					'standard-conventions/folder-camel-case': 'error',
+
+					// Helper static-only rule: Helpers MUST have only static methods
+					'standard-conventions/helper-static-only': 'error',
+					// Non-helper classes should NOT have static methods (except Factories)
+					'standard-conventions/no-static-in-non-helpers': 'error',
+
+					// Class location rules: enforce proper folder structure
+					'standard-conventions/class-location': ['error', {
+						mappings: {
+							Service: 'services',
+							Repository: 'repositories',
+							Helper: 'helpers',
+							Factory: 'factories',
+							Transformer: 'transformers',
+							Registry: 'registries',
+							Adapter: 'adapters'
+						}
+					}],
+
+					// Type location rule: Types must be in types folder
+					'standard-conventions/type-location': 'error',
+
+					// One class per file rule
+					'standard-conventions/one-class-per-file': 'error',
+
+					// Repository CQRS enforcement
+					'standard-conventions/repository-cqrs': 'error',
+
+					'unicorn/filename-case': ['error', {
+						cases: {
+							camelCase: true,
+							pascalCase: true
+						}
+					}],
+					// Enforce Type prefix OR Interface suffix strictly
+					// TypeXXX for data types, XXXInterface for class contracts
+					'@typescript-eslint/naming-convention': [
+						'error',
+						{
+							selector: 'interface',
+							format: ['PascalCase'],
+							custom: {
+								regex: '(^Type[A-Z]|Interface$)',
+								match: true
+							}
+						},
+						{
+							selector: 'typeAlias',
+							format: ['PascalCase'],
+							custom: {
+								regex: '^Type[A-Z]',
+								match: true
+							}
+						},
+						{
+							selector: 'class',
+							format: ['PascalCase']
+						},
+						{
+							selector: 'enum',
+							format: ['PascalCase'],
+							custom: {
+								regex: '^Enum[A-Z]',
+								match: true
+							}
+						}
+					]
+				} : {}),
+
 				// Allow custom rules to be added
 				...rules
 			},
