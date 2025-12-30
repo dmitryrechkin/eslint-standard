@@ -1025,6 +1025,60 @@ const schemaNamingRule = {
 	}
 };
 
+/**
+ * Rule: Repository methods accepting 'id' must end with 'ById'
+ * @type {import('eslint').Rule.RuleModule}
+ */
+const repositoryByIdRule = {
+	meta: {
+		type: 'suggestion',
+		docs: {
+			description: 'Enforce "ById" suffix for repository methods that take an "id" parameter',
+			category: 'Naming Conventions',
+			recommended: false
+		},
+		schema: []
+	},
+	create(context) {
+		return {
+			MethodDefinition(node) {
+				// Only check methods in Repository classes
+				const classNode = node.parent.parent;
+				if (!classNode || !classNode.id || !classNode.id.name.endsWith('Repository')) {
+					return;
+				}
+
+				// Skip constructors and static methods
+				if (node.kind === 'constructor' || node.static) {
+					return;
+				}
+
+				const methodParam = node.value.params[0];
+				if (!methodParam) {
+					return;
+				}
+
+				// Check if first parameter is named 'id'
+				let paramName = '';
+				if (methodParam.type === 'Identifier') {
+					paramName = methodParam.name;
+				}
+
+				if (paramName === 'id') {
+					const methodName = node.key.name;
+					if (!methodName.endsWith('ById')) {
+						context.report({
+							node: node.key,
+							message: 'Repository method "{{ methodName }}" accepts "id" parameter but does not end with "ById". Rename to "{{ methodName }}ById".',
+							data: { methodName }
+						});
+					}
+				}
+			}
+		};
+	}
+};
+
 export default {
 	rules: {
 		'service-single-public-method': serviceSinglePublicMethodRule,
@@ -1045,6 +1099,7 @@ export default {
 		'explicit-return-type': explicitReturnTypeRule,
 		'no-direct-instantiation': noDirectInstantiationRule,
 		'prefer-enums': preferEnumsRule,
-		'schema-naming': schemaNamingRule
+		'schema-naming': schemaNamingRule,
+		'repository-by-id': repositoryByIdRule
 	}
 };

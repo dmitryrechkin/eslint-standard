@@ -50,7 +50,8 @@ const overrides = {
 		'standard-conventions/schema-naming': 'error',
 		'standard-conventions/factory-single-public-method': 'error',
 		'standard-conventions/service-single-public-method': 'error',
-		'standard-conventions/no-static-in-non-helpers': 'error'
+		'standard-conventions/no-static-in-non-helpers': 'error',
+		'standard-conventions/repository-by-id': 'error'
 	}
 };
 
