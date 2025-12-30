@@ -31,6 +31,7 @@ async function runTests() {
 	fs.mkdirSync(path.join(testDir, 'helpers'));
 	fs.mkdirSync(path.join(testDir, 'schemas'));
 	fs.mkdirSync(path.join(testDir, 'registries'));
+	fs.mkdirSync(path.join(testDir, 'repositories'));
 
 	const testFiles = [
 		// 1. Factory Single Public Method
@@ -321,6 +322,75 @@ async function runTests() {
 			content: `import { pgTable } from 'drizzle-orm/pg-core';
 			export const Users = pgTable('users', {});`,
 			expected: ['standard-conventions/schema-naming']
+		},
+
+		// 9. No Utils Folder
+		{
+			name: 'No Utils - Valid: Helpers folder',
+			path: 'helpers/StringHelper.ts',
+			content: `export class StringHelper {}`,
+			expected: []
+		},
+		{
+			name: 'No Utils - Invalid: Utils folder',
+			path: 'utils/StringUtil.ts',
+			content: `export class StringUtil {}`,
+			expected: ['standard-conventions/no-utils-folder']
+		},
+		{
+			name: 'No Utils - Invalid: Util folder',
+			path: 'util/DateUtil.ts',
+			content: `export class DateUtil {}`,
+			expected: ['standard-conventions/no-utils-folder']
+		},
+
+		// 10. Repository By ID
+		{
+			name: 'Repository - Valid: ById suffix methods',
+			path: 'repositories/UserRepository.ts',
+			content: `export class UserRepository {
+				public findById(id: string): User | null { return null; }
+				public deleteById(id: string): void {}
+				public updateById(id: string, data: Record<string, unknown>): void {}
+			}`,
+			expected: []
+		},
+		{
+			name: 'Repository - Valid: Mixed with ById',
+			path: 'repositories/ProductRepository.ts',
+			content: `export class ProductRepository {
+				public findById(id: string): Product | null { return null; }
+				public findAll(): Product[] { return []; }
+				private helper(): void {}
+			}`,
+			expected: []
+		},
+		{
+			name: 'Repository - Invalid: Missing ById suffix on find',
+			path: 'repositories/OrderRepository.ts',
+			content: `export class OrderRepository {
+				public find(id: string): Order | null { return null; }
+				public deleteById(id: string): void {}
+			}`,
+			expected: ['standard-conventions/repository-by-id']
+		},
+		{
+			name: 'Repository - Invalid: Missing ById suffix on delete',
+			path: 'repositories/CartRepository.ts',
+			content: `export class CartRepository {
+				public findById(id: string): Cart | null { return null; }
+				public remove(id: string): void {}
+			}`,
+			expected: ['standard-conventions/repository-by-id']
+		},
+		{
+			name: 'Repository - Invalid: Missing ById suffix on update',
+			path: 'repositories/ItemRepository.ts',
+			content: `export class ItemRepository {
+				public findById(id: string): Item | null { return null; }
+				public update(id: string, data: any): void {}
+			}`,
+			expected: ['standard-conventions/repository-by-id']
 		}
 	];
 

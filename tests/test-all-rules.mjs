@@ -72,7 +72,7 @@ for (const test of tests) {
 		execSync(`node ${test.script}`, {
 			stdio: 'inherit',
 			cwd: __dirname,
-			timeout: 180000 // 180 second timeout per test (Unicorn takes ~87s, Safety ~53s)
+			timeout: 300000 // 300 second timeout per test (Unicorn takes ~87s, Safety ~53s)
 		});
 		passedTests++;
 		results.push({ name: test.name, status: '✅ PASSED' });

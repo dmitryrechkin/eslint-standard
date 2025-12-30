@@ -97,6 +97,7 @@ export default config({
 | **Repository CQRS** | `CommandRepository` cannot have query methods (`get`, `find`, `list`), `QueryRepository` cannot have command methods (`create`, `update`, `delete`) | Command Query Responsibility Segregation for scalable data access |
 | **Folder CamelCase** | All folder names must be camelCase | Consistent naming across the codebase |
 | **Function Name Match Filename** | Top-level function name must match filename | Predictable imports and file discovery |
+| **No Utils Folder** | `utils/` folder is forbidden | Use `helpers/` for stateless logic or domain objects for stateful logic |
 
 #### Example Project Structure
 

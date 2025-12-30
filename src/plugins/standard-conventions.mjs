@@ -1079,6 +1079,56 @@ const repositoryByIdRule = {
 	}
 };
 
+/**
+ * Rule: Avoid using 'utils' folder, prefer 'helpers'
+ * @type {import('eslint').Rule.RuleModule}
+ */
+const noUtilsFolderRule = {
+	meta: {
+		type: 'suggestion',
+		docs: {
+			description: 'Enforce that "utils" folders are not used, preferring "helpers" instead',
+			category: 'Best Practices',
+			recommended: false
+		},
+		schema: []
+	},
+	create(context) {
+		return {
+			Program(node) {
+				const fullPath = context.getFilename();
+
+				if (fullPath === '<input>' || fullPath === '<text>') {
+					return;
+				}
+
+				const dirPath = path.dirname(fullPath);
+				const relativePath = path.relative(process.cwd(), dirPath);
+
+				if (!relativePath || relativePath === '.') {
+					return;
+				}
+
+				const folders = relativePath.split(path.sep);
+
+				// Check if any folder is named 'utils' or 'util'
+				for (const folder of folders) {
+					if (folder.toLowerCase() === 'utils' || folder.toLowerCase() === 'util') {
+						context.report({
+							node: node,
+							loc: { line: 1, column: 0 },
+							message: 'Avoid using "{{ folder }}" folder. Use "helpers" for shared logic, or specific domain names (e.g. "services", "factories").',
+							data: { folder }
+						});
+						// Report only once per file
+						break;
+					}
+				}
+			}
+		};
+	}
+};
+
 export default {
 	rules: {
 		'service-single-public-method': serviceSinglePublicMethodRule,
@@ -1100,6 +1150,7 @@ export default {
 		'no-direct-instantiation': noDirectInstantiationRule,
 		'prefer-enums': preferEnumsRule,
 		'schema-naming': schemaNamingRule,
-		'repository-by-id': repositoryByIdRule
+		'repository-by-id': repositoryByIdRule,
+		'no-utils-folder': noUtilsFolderRule
 	}
 };

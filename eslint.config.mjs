@@ -882,6 +882,12 @@ export default function ({
 					// Repository CQRS enforcement
 					'standard-conventions/repository-cqrs': 'error',
 
+					// Repository 'ById' naming enforcement
+					'standard-conventions/repository-by-id': 'error',
+
+					// No 'utils' folder enforcement
+					'standard-conventions/no-utils-folder': 'error',
+
 					// Enforce separation of schemas, types, and constants from class files
 					'standard-conventions/no-schemas-in-class-files': 'error',
 					'standard-conventions/no-types-in-class-files': 'error',
