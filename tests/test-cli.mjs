@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 console.log('🧪 Testing ESLint Standard CLI Commands\n');
 
@@ -11,7 +15,7 @@ const testDir = path.join(__dirname, 'test-install');
 
 // Clean up test directory if it exists
 if (fs.existsSync(testDir)) {
-	fs.rmSync(testDir, { recursive: true });
+	fs.rmSync(testDir, { recursive: true, force: true });
 }
 
 // Create test directory
@@ -26,72 +30,105 @@ const testPackageJson = {
 };
 
 fs.writeFileSync(
-	path.join(testDir, 'package.json'), 
+	path.join(testDir, 'package.json'),
 	JSON.stringify(testPackageJson, null, 2)
 );
 
 console.log('📁 Created test directory:', testDir);
 
+let failedTests = 0;
+
 // Test 1: Help command
 console.log('\n📋 Test 1: Help command');
 try {
-	const helpOutput = execSync(`node ${cliPath} help`, { encoding: 'utf8' });
+	const helpOutput = execFileSync('node', [cliPath, 'help'], { encoding: 'utf8' });
 	console.log('✅ Help command works');
-	console.log(helpOutput.substring(0, 100) + '...');
+	// console.log(helpOutput.substring(0, 100) + '...');
 } catch (error) {
 	console.error('❌ Help command failed:', error.message);
+	failedTests++;
 }
 
 // Test 2: Check dependencies (should find missing)
 console.log('\n🔍 Test 2: Check dependencies in test directory');
 try {
-	execSync(`node ${cliPath} check-deps`, { 
+	execFileSync('node', [cliPath, 'check-deps'], {
 		cwd: testDir,
-		encoding: 'utf8' 
+		encoding: 'utf8',
+		stdio: 'pipe' // capture output to verify failure
 	});
 	console.error('❌ Expected check-deps to fail with missing dependencies');
+	failedTests++;
 } catch (error) {
 	if (error.status === 1) {
 		console.log('✅ Correctly detected missing dependencies');
-		console.log(error.stdout.substring(0, 200) + '...');
+		// console.log(error.stdout.substring(0, 200) + '...');
 	} else {
 		console.error('❌ Unexpected error:', error.message);
+		failedTests++;
 	}
 }
 
-// Test 3: Check with --install flag (mock)
-console.log('\n🔧 Test 3: Check dependencies with --install flag');
-console.log('⏭️  Skipping actual installation to avoid modifying test environment');
-console.log('✅ Would run: check-deps --install');
-
-// Test 4: Test postinstall behavior
-console.log('\n📮 Test 4: Test postinstall script');
-const postinstallPath = path.join(__dirname, '../src/cli/postinstall.mjs');
-
-// Test with skip flag
-try {
-	const skipOutput = execSync(`ESLINT_STANDARD_SKIP_INSTALL=true node ${postinstallPath}`, {
-		cwd: path.join(__dirname, '../node_modules/@dmitryrechkin/eslint-standard'), // Simulate node_modules
-		encoding: 'utf8'
-	});
-	console.log('✅ Postinstall respects SKIP_INSTALL flag (no output)');
-} catch (error) {
-	console.log('✅ Postinstall respects SKIP_INSTALL flag (silent exit)');
+// Test 3: Lint command with error message
+console.log('\n🧹 Test 3: Lint command with error message');
+const lintTestDir = path.join(__dirname, 'test-lint-msg');
+if (fs.existsSync(lintTestDir)) {
+    fs.rmSync(lintTestDir, { recursive: true, force: true });
 }
+fs.mkdirSync(lintTestDir);
 
-// Test in CI environment
+// Create a file with a linting error (using var)
+// We need a basic eslint config to make sure it runs
+const eslintConfig = `
+export default [
+    {
+        files: ["**/*.js"],
+        rules: {
+            "no-var": "error"
+        }
+    }
+];
+`;
+fs.writeFileSync(path.join(lintTestDir, 'eslint.config.js'), eslintConfig);
+fs.writeFileSync(path.join(lintTestDir, 'bad-code.js'), 'var a = 1;');
+
 try {
-	const ciOutput = execSync(`CI=true node ${postinstallPath}`, {
-		cwd: path.join(__dirname, '../node_modules/@dmitryrechkin/eslint-standard'), // Simulate node_modules
-		encoding: 'utf8'
-	});
-	console.log('✅ Postinstall skips in CI environment');
+    // Run the lint command on the directory
+    // We expect it to fail
+    execFileSync('node', [cliPath, 'lint', '.'], {
+        cwd: lintTestDir,
+        encoding: 'utf8',
+        stdio: 'pipe'
+    });
+    console.error('❌ Expected lint command to fail');
+    failedTests++;
 } catch (error) {
-	console.log('✅ Postinstall skips in CI environment');
+    if (error.status !== 0) {
+        // Check stdout/stderr for the specific message
+        const output = (error.stdout || '') + (error.stderr || '');
+        const expectedMessage = 'please address all the errors and warnings and re-run linting after, make sure everything builds and all tests pass after modifying the code';
+
+        if (output.includes(expectedMessage)) {
+            console.log('✅ Found expected error message');
+        } else {
+            console.error('❌ Did not find expected error message');
+            console.error('Output was:', output);
+            failedTests++;
+        }
+    } else {
+        console.error('❌ Unexpected successful exit code');
+        failedTests++;
+    }
 }
 
 // Clean up
-console.log('\n🧹 Cleaning up test directory...');
-fs.rmSync(testDir, { recursive: true });
+console.log('\n🧹 Cleaning up test directories...');
+if (fs.existsSync(testDir)) fs.rmSync(testDir, { recursive: true, force: true });
+if (fs.existsSync(lintTestDir)) fs.rmSync(lintTestDir, { recursive: true, force: true });
 
-console.log('\n✅ All CLI tests completed!');
+if (failedTests > 0) {
+    console.log(`\n❌ ${failedTests} tests failed`);
+    process.exit(1);
+} else {
+    console.log('\n✅ All CLI tests completed!');
+}

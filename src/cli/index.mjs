@@ -9,6 +9,9 @@ switch (command) {
 	case 'check-deps':
 		await import('./check-deps.mjs');
 		break;
+	case 'lint':
+		await import('./lint.mjs');
+		break;
 	case 'help':
 	case '--help':
 	case '-h':
@@ -23,12 +26,14 @@ Commands:
   install-deps                  Install all peer dependencies
   check-deps                    Check if all peer dependencies are installed
   check-deps --install          Auto-install missing dependencies if any
+  lint                          Run eslint with custom error message
   help                          Show this help message
 
 Examples:
   npx @dmitryrechkin/eslint-standard install-deps
   npx @dmitryrechkin/eslint-standard check-deps
   npx @dmitryrechkin/eslint-standard check-deps --install
+  npx @dmitryrechkin/eslint-standard lint .
 		`);
 		break;
 	default:
