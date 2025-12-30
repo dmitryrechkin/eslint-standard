@@ -121,10 +121,56 @@ try {
     }
 }
 
+// Test 4: Format command
+console.log('\n✨ Test 4: Format command');
+const formatTestDir = path.join(__dirname, 'test-format');
+if (fs.existsSync(formatTestDir)) {
+    fs.rmSync(formatTestDir, { recursive: true, force: true });
+}
+fs.mkdirSync(formatTestDir);
+
+// Create eslint config that enforces semicolons (fixable)
+const formatEslintConfig = `
+export default [
+    {
+        files: ["**/*.js"],
+        rules: {
+            "semi": ["error", "always"]
+        }
+    }
+];
+`;
+fs.writeFileSync(path.join(formatTestDir, 'eslint.config.js'), formatEslintConfig);
+
+// Create a file missing a semicolon
+fs.writeFileSync(path.join(formatTestDir, 'unformatted.js'), 'const a = 1');
+
+try {
+    execFileSync('node', [cliPath, 'format', '.'], {
+        cwd: formatTestDir,
+        encoding: 'utf8',
+        stdio: 'inherit'
+    });
+    console.log('✅ Format command executed successfully');
+
+    // Verify file content
+    const content = fs.readFileSync(path.join(formatTestDir, 'unformatted.js'), 'utf8');
+    if (content.includes('const a = 1;')) {
+        console.log('✅ File was formatted correctly');
+    } else {
+        console.error('❌ File was NOT formatted correctly. Content:', content);
+        failedTests++;
+    }
+} catch (error) {
+    console.error('❌ Format command failed:', error.message);
+    failedTests++;
+}
+
 // Clean up
 console.log('\n🧹 Cleaning up test directories...');
 if (fs.existsSync(testDir)) fs.rmSync(testDir, { recursive: true, force: true });
 if (fs.existsSync(lintTestDir)) fs.rmSync(lintTestDir, { recursive: true, force: true });
+if (fs.existsSync(formatTestDir)) fs.rmSync(formatTestDir, { recursive: true, force: true });
 
 if (failedTests > 0) {
     console.log(`\n❌ ${failedTests} tests failed`);

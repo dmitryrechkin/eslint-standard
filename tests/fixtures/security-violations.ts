@@ -3,9 +3,9 @@
  * This file contains intentional security vulnerabilities to test ESLint security rules
  */
 
-import * as fs from 'fs';
-import { exec } from 'child_process';
-import * as crypto from 'crypto';
+import * as fs from 'node:fs';
+import { exec } from 'node:child_process';
+import * as crypto from 'node:crypto';
 
 /**
  * Test eval usage violations

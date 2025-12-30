@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -52,7 +52,7 @@ if (autoInstall) {
 	
 	try {
 		// Run check-deps with --install flag
-		const { execSync } = await import('child_process');
+		const { execSync } = await import('node:child_process');
 		execSync('node ' + join(__dirname, 'index.mjs') + ' check-deps --install', {
 			stdio: 'inherit',
 			cwd: process.cwd()

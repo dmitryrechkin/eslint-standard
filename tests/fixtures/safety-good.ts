@@ -1,6 +1,6 @@
 // This file contains code that follows all safety rules
 
-import { readFile, writeFile } from 'fs'; // Single import statement
+import { readFile, writeFile } from 'node:fs'; // Single import statement
 
 /**
  * Properly handled promise

@@ -12,6 +12,9 @@ switch (command) {
 	case 'lint':
 		await import('./lint.mjs');
 		break;
+	case 'format':
+		await import('./format.mjs');
+		break;
 	case 'help':
 	case '--help':
 	case '-h':
@@ -27,6 +30,7 @@ Commands:
   check-deps                    Check if all peer dependencies are installed
   check-deps --install          Auto-install missing dependencies if any
   lint                          Run eslint with custom error message
+  format                        Run eslint --fix with custom error message
   help                          Show this help message
 
 Examples:
@@ -34,6 +38,7 @@ Examples:
   npx @dmitryrechkin/eslint-standard check-deps
   npx @dmitryrechkin/eslint-standard check-deps --install
   npx @dmitryrechkin/eslint-standard lint .
+  npx @dmitryrechkin/eslint-standard format .
 		`);
 		break;
 	default:

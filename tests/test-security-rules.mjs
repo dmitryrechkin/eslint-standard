@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { execSync } from 'child_process';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { execSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +17,7 @@ const fixtures = {
 // Expected violations for security plugin rules
 const expectedViolations = {
 	'security/detect-eval-with-expression': 'eval can be harmful',
-	'security/detect-non-literal-fs-filename': 'Found fs',
+	'security/detect-non-literal-fs-filename': 'Found readFile',
 	'security/detect-non-literal-regexp': 'Found non-literal regexp',
 	'security/detect-unsafe-regex': 'Unsafe Regular Expression',
 	'security/detect-buffer-noassert': 'Found Buffer.write',

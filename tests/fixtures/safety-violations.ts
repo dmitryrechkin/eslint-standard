@@ -191,8 +191,8 @@ export async function returnAwait(): Promise<string> {
 }
 
 // 30. Duplicate imports
-import { readFile } from 'fs';
-import { writeFile } from 'fs'; // Should be single import
+import { readFile } from 'node:fs';
+import { writeFile } from 'node:fs'; // Should be single import
 
 // 31. Unreachable code
 export function unreachableCode(): string {

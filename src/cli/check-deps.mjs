@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join, resolve } from 'path';
-import { spawn } from 'child_process';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -17,18 +16,8 @@ const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 const peerDeps = packageJson.peerDependencies || {};
 
 // Check if running from node_modules and find project root
-const isInNodeModules = __dirname.includes('node_modules');
-let projectRoot;
-
-if (isInNodeModules) {
-	// Handle different package manager structures
-	// pnpm: .pnpm/@org+pkg@version_deps/node_modules/@org/pkg
-	// npm/yarn: node_modules/@org/pkg
-	const parts = __dirname.split('node_modules');
-	projectRoot = parts[0].replace(/[\\/]$/, ''); // Remove trailing slash
-} else {
-	projectRoot = process.cwd();
-}
+// We primarily use process.cwd() as this is a CLI tool meant to run in the target project
+const projectRoot = process.cwd();
 
 // Read project's package.json
 let projectPackageJson;
@@ -36,6 +25,7 @@ try {
 	projectPackageJson = JSON.parse(readFileSync(join(projectRoot, 'package.json'), 'utf8'));
 } catch (error) {
 	console.error('❌ Could not read project package.json');
+	console.error(`Checked in: ${projectRoot}`);
 	process.exit(1);
 }
 
@@ -69,13 +59,13 @@ if (missingDeps.length === 0 && outdatedDeps.length === 0) {
 	if (missingDeps.length > 0) {
 		console.log(`\n❌ Missing ${missingDeps.length} dependencies:`);
 		missingDeps.forEach(dep => console.log(`  - ${dep}`));
-		
+
 		if (shouldInstall) {
 			console.log('\n🔧 Auto-installing missing dependencies...\n');
-			
+
 			// Import and run the install-deps script
 			try {
-				const installDepsModule = await import('./install-deps.mjs');
+				await import('./install-deps.mjs');
 				// The install-deps script will handle the installation
 			} catch (error) {
 				console.error('❌ Failed to auto-install dependencies:', error.message);
@@ -91,7 +81,7 @@ if (missingDeps.length === 0 && outdatedDeps.length === 0) {
 		console.log(`\n⚠️  ${outdatedDeps.length} dependencies may be outdated:`);
 		outdatedDeps.forEach(dep => console.log(`  - ${dep}`));
 	}
-	
+
 	if (!shouldInstall && missingDeps.length > 0) {
 		process.exit(1);
 	}

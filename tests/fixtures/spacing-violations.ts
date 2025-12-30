@@ -4,7 +4,7 @@
  */
 
 // 1. Missing blank line after imports
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 const immediateAfterImport = 'should have blank line above';
 
 // 2. Missing blank line after variable declarations before different statement
