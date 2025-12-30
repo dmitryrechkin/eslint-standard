@@ -12,6 +12,9 @@
 	"include": [
 		"fixtures/**/*.ts",
 		"strict-test-temp/**/*.ts",
+		"separation-test-temp/**/*.ts",
+		"strict-comprehensive-temp/**/*.ts",
+		"strict-rules-temp/**/*.ts",
 		"*.ts"
 	]
 }

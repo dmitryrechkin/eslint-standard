@@ -1,7 +1,7 @@
 {
 	"name": "@dmitryrechkin/eslint-standard",
 	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-	"version": "1.5.8",
+	"version": "1.5.9",
 	"main": "eslint.config.mjs",
 	"exports": {
 		".": "./eslint.config.mjs"
@@ -32,7 +32,7 @@
 		"test:switch-case": "node tests/test-switch-case-simple.mjs",
 		"test:cli": "node tests/test-cli.mjs",
 		"test:install": "node tests/test-install-simulation.mjs",
-		"test:strict": "node tests/test-strict-conventions.mjs"
+		"test:strict": "node tests/test-strict-rules.mjs"
 	},
 	"keywords": [],
 	"author": "",

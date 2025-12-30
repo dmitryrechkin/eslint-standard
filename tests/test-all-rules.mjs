@@ -49,8 +49,13 @@ const tests = [
 	},
 	{
 		name: 'Strict Conventions',
-		script: 'test-strict-conventions.mjs',
+		script: 'test-strict-rules.mjs',
 		description: 'Tests interface enforcement, service method limits, and naming conventions'
+	},
+	{
+		name: 'Separation Rules',
+		script: 'test-separation-rules.mjs',
+		description: 'Tests strict separation of schemas, types, and constants from class files'
 	}
 ];
 
