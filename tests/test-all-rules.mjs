@@ -18,6 +18,11 @@ const tests = [
 		description: 'Tests import sorting, JSDoc generation, class member ordering'
 	},
 	{
+		name: 'Naming Conventions',
+		script: 'test-naming-conventions.mjs',
+		description: 'Tests @typescript-eslint/naming-convention rule including objectLiteralProperty'
+	},
+	{
 		name: 'Complexity Rules',
 		script: 'test-complexity-rules.mjs',
 		description: 'Tests cyclomatic complexity, function length, nesting depth, etc.'

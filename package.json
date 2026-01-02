@@ -1,7 +1,7 @@
 {
 	"name": "@dmitryrechkin/eslint-standard",
 	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-	"version": "1.5.9",
+	"version": "1.5.10",
 	"type": "module",
 	"main": "eslint.config.mjs",
 	"exports": {
@@ -24,6 +24,7 @@
 		"test:formatting": "node tests/test-runner.mjs",
 		"test:simple": "node tests/simple-test.mjs",
 		"test:debug": "node tests/debug-test.mjs",
+		"test:naming": "node tests/test-naming-conventions.mjs",
 		"test:complexity": "node tests/test-complexity-rules.mjs",
 		"test:safety": "node tests/test-safety-rules.mjs",
 		"test:security": "node tests/test-security-rules.mjs",

@@ -252,13 +252,14 @@ const helperStaticOnlyRule = {
 
 /**
  * Rule: Non-helper classes should not have static methods (except factories)
+ * Static readonly properties (constants) are allowed.
  * @type {import('eslint').Rule.RuleModule}
  */
 const noStaticInNonHelpersRule = {
 	meta: {
 		type: 'suggestion',
 		docs: {
-			description: 'Enforce that non-Helper/Factory classes do not have static methods',
+			description: 'Enforce that non-Helper/Factory classes do not have static methods. Static readonly properties (constants) are allowed.',
 			category: 'Best Practices',
 			recommended: false
 		},
@@ -280,7 +281,8 @@ const noStaticInNonHelpersRule = {
 
 				const staticMembers = node.body.body.filter(member => {
 					return (
-						(member.type === 'MethodDefinition' || member.type === 'PropertyDefinition') &&
+						member.type === 'MethodDefinition' &&
+						member.kind === 'method' &&
 						member.static
 					);
 				});
@@ -291,7 +293,7 @@ const noStaticInNonHelpersRule = {
 
 						context.report({
 							node: member,
-							message: 'Class "{{ className }}" should not have static members. Use a Helper class for static methods. Static member: "{{ memberName }}".',
+							message: 'Class "{{ className }}" should not have static methods. Use a Helper class for static methods. Static method: "{{ memberName }}".',
 							data: {
 								className,
 								memberName

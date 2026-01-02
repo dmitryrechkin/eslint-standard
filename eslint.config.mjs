@@ -396,19 +396,25 @@ export default function ({
 						modifiers: ['unused'],
 					},
 					{
-						selector: 'memberLike',
-						format: ['camelCase'],
-						leadingUnderscore: 'forbid',
-					},
-					{
 						selector: 'property',
 						modifiers: ['readonly'],
 						format: ['camelCase', 'UPPER_CASE'],
 						leadingUnderscore: 'forbid',
 					},
 					{
+						// WHY: objectLiteralProperty must come BEFORE memberLike
+						// The first matching selector wins (ESLint rule precedence).
+						// Since 'memberLike' matches object literal properties, placing it before
+						// 'objectLiteralProperty' would prevent the more specific selector from ever
+						// being evaluated, allowing snake_case properties to slip through.
+						// See: tests/test-naming-conventions.mjs for regression test.
 						selector: 'objectLiteralProperty',
 						format: ['camelCase', 'UPPER_CASE'],
+						leadingUnderscore: 'forbid',
+					},
+					{
+						selector: 'memberLike',
+						format: ['camelCase'],
 						leadingUnderscore: 'forbid',
 					},
 					{
@@ -858,6 +864,7 @@ export default function ({
 					// Helper static-only rule: Helpers MUST have only static methods
 					'standard-conventions/helper-static-only': 'error',
 					// Non-helper classes should NOT have static methods (except Factories)
+					// Static readonly properties (constants) are allowed in any class
 					'standard-conventions/no-static-in-non-helpers': 'error',
 
 					// Class location rules: enforce proper folder structure
