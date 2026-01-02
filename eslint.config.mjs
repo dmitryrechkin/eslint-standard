@@ -44,7 +44,7 @@ export default function ({
 } = {}) {
 	// Use external prettier plugin if provided, otherwise fallback to bundled one
 	const activePrettierPlugin = externalPrettierPlugin || prettierPlugin;
-	
+
 	return [
 		{
 			ignores: ['node_modules/**', 'dist/**', ...ignores],
@@ -100,7 +100,7 @@ export default function ({
 				'prettier/prettier': 'error',
 				// Disable rules that conflict with prettier
 				'switch-case-brace/switch-case-brace-style': 'off',
-				
+
 				// Original @dmitryrechkin/eslint-standard rules
 				'@typescript-eslint/explicit-function-return-type': 'error',
 				'@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
@@ -250,27 +250,26 @@ export default function ({
 				'jsdoc/no-types': 'off', // Allow type annotations in JSDoc
 				'jsdoc/check-types': 'error', // Ensure valid JSDoc types
 				'jsdoc/valid-types': 'error', // Validate type syntax
-				
+
 				// Enhanced: Interface brace style
 				'interface-brace/interface-brace-style': 'off', // Disabled - conflicts with prettier-plugin-brace-style
-				
+
 				// Enhanced: Switch case brace style - Allman style for case blocks
 				'switch-case-brace/switch-case-brace-style': 'error',
 
 				// Additional naming conventions based on coding standards
 				'@typescript-eslint/naming-convention': [
 					'warn',
-					// Existing rules remain the same...
 					{
 						selector: 'variableLike',
 						format: ['camelCase'],
-						leadingUnderscore: 'forbid',
+						leadingUnderscore: 'forbid'
 					},
 					{
 						selector: 'variable',
 						modifiers: ['const'],
 						format: ['camelCase', 'UPPER_CASE'],
-						leadingUnderscore: 'forbid',
+						leadingUnderscore: 'forbid'
 					},
 					{
 						selector: 'variable',
@@ -386,20 +385,20 @@ export default function ({
 						leadingUnderscore: 'forbid',
 						custom: {
 							regex: '^_',
-							match: false,
-						},
+							match: false
+						}
 					},
 					{
 						selector: 'parameter',
 						format: null,
 						leadingUnderscore: 'require',
-						modifiers: ['unused'],
+						modifiers: ['unused']
 					},
 					{
 						selector: 'property',
 						modifiers: ['readonly'],
 						format: ['camelCase', 'UPPER_CASE'],
-						leadingUnderscore: 'forbid',
+						leadingUnderscore: 'forbid'
 					},
 					{
 						// WHY: objectLiteralProperty must come BEFORE memberLike
@@ -410,17 +409,17 @@ export default function ({
 						// See: tests/test-naming-conventions.mjs for regression test.
 						selector: 'objectLiteralProperty',
 						format: ['camelCase', 'UPPER_CASE'],
-						leadingUnderscore: 'forbid',
+						leadingUnderscore: 'forbid'
 					},
 					{
 						selector: 'memberLike',
 						format: ['camelCase'],
-						leadingUnderscore: 'forbid',
+						leadingUnderscore: 'forbid'
 					},
 					{
 						selector: 'enumMember',
 						format: ['camelCase', 'UPPER_CASE'],
-						leadingUnderscore: 'forbid',
+						leadingUnderscore: 'forbid'
 					},
 					// Schema table files must end with 'Table'
 					{
@@ -486,52 +485,52 @@ export default function ({
 				'@typescript-eslint/no-floating-promises': 'error', // Await or handle promises
 				'@typescript-eslint/await-thenable': 'error', // Only await promises
 				'no-return-await': 'off', // Actually useful for stack traces
-				
+
 				// Array safety
 				'@typescript-eslint/no-array-delete': 'error', // Use splice, not delete
 				'array-callback-return': 'error', // Ensure array methods return values
-				
+
 				// Error handling
 				'@typescript-eslint/only-throw-error': 'error', // Only throw Error objects
 				'no-empty': ['error', { allowEmptyCatch: false }], // No empty blocks
 				'no-fallthrough': 'error', // Prevent switch case fallthrough
-				
+
 				// Null/undefined safety
 				'@typescript-eslint/no-unnecessary-condition': 'warn', // Catch always-truthy/falsy
 				'no-unsafe-optional-chaining': 'error', // Prevent ?. errors
-				
+
 				// Function safety
 				'require-await': 'error', // Async functions must use await
 				'no-async-promise-executor': 'error', // No async in Promise constructor
 				'@typescript-eslint/no-misused-promises': 'error', // Correct promise usage
-				
+
 				// Variable safety
 				'no-shadow': 'off', // Turn off base rule
 				'@typescript-eslint/no-shadow': 'error', // No variable shadowing
 				'no-use-before-define': 'off', // Turn off base rule
 				'@typescript-eslint/no-use-before-define': 'error', // Define before use
 				'no-param-reassign': ['error', { props: false }], // Don't reassign parameters (but allow property mutation)
-				
+
 				// Loop safety
 				'for-direction': 'error', // Prevent infinite loops
 				'no-unmodified-loop-condition': 'error', // Loop conditions must change
 				'no-await-in-loop': 'warn', // Warn on await in loops
-				
+
 				// Security basics
 				'no-eval': 'error', // No eval()
 				'no-implied-eval': 'error', // No setTimeout(string)
 				'no-new-func': 'error', // No new Function()
-				
+
 				// Maintainability
 				'no-duplicate-imports': 'error', // One import per module
 				'@typescript-eslint/no-duplicate-enum-values': 'error', // Unique enum values
 				'no-unreachable': 'error', // No code after return/throw
-				'no-unused-expressions': ['error', { 
+				'no-unused-expressions': ['error', {
 					allowShortCircuit: true, // Allow && and || for control flow
 					allowTernary: true, // Allow ternary for side effects
 					allowTaggedTemplates: true // Allow tagged templates
 				}], // No side-effect free expressions
-				
+
 				// Common bug prevention
 				'no-cond-assign': 'error', // No assignment in conditions
 				'no-constant-condition': 'error', // No constant conditions in if/while
@@ -541,12 +540,12 @@ export default function ({
 				'no-irregular-whitespace': 'error', // No weird whitespace
 				'valid-typeof': 'error', // Typeof comparisons must be valid
 				'@typescript-eslint/no-unnecessary-type-assertion': 'error', // No redundant type assertions
-				
+
 				// Number safety
 				'no-loss-of-precision': 'error', // Prevent precision loss
 				'no-compare-neg-zero': 'error', // Use Object.is for -0
 				'use-isnan': 'error', // Use isNaN() for NaN checks
-				'no-magic-numbers': ['warn', { 
+				'no-magic-numbers': ['warn', {
 					ignore: [0, 1, -1, 2, 10, 100, 1000, // Common multipliers
 						60, 24, 365, // Time calculations
 						200, 204, 301, 302, 400, 401, 403, 404, 500, 502, 503], // HTTP codes
@@ -555,14 +554,14 @@ export default function ({
 					enforceConst: true,
 					ignoreClassFieldInitialValues: true
 				}], // Named constants for magic numbers
-				
+
 				// Identifier length rules
 				'id-length': ['warn', {
 					min: 3,
 					exceptions: ['i', 'j', 'k', 'x', 'y', 'z', 'id', 'db', 'fs', 'os', 'io', 'ui', 'vm', '_', 'idx'],
 					properties: 'never' // Don't apply to object properties
 				}],
-				
+
 				// Security plugin rules
 				'security/detect-eval-with-expression': 'error',
 				'security/detect-non-literal-fs-filename': 'warn',
@@ -575,7 +574,7 @@ export default function ({
 				'security/detect-object-injection': 'off', // Too many false positives with TypeScript enums
 				'security/detect-possible-timing-attacks': 'warn',
 				'security/detect-pseudoRandomBytes': 'error',
-				
+
 				// Promise plugin rules
 				'promise/always-return': 'error',
 				'promise/no-return-wrap': 'error',
@@ -591,7 +590,7 @@ export default function ({
 				'promise/valid-params': 'error',
 				'promise/prefer-await-to-then': 'warn',
 				'promise/prefer-await-to-callbacks': 'warn',
-				
+
 				// Import plugin rules
 				'import/no-unresolved': 'off', // Too many false positives with TypeScript
 				'import/named': 'error',
@@ -635,7 +634,7 @@ export default function ({
 				'import/group-exports': 'off',
 				'import/dynamic-import-chunkname': 'off',
 				'import/order': 'off', // Disabled - conflicts with simple-import-sort plugin
-				
+
 				// JSX A11y plugin rules (only active for React/JSX files)
 				'jsx-a11y/alt-text': 'error',
 				'jsx-a11y/anchor-has-content': 'error',
@@ -664,7 +663,7 @@ export default function ({
 				'jsx-a11y/role-supports-aria-props': 'error',
 				'jsx-a11y/scope': 'error',
 				'jsx-a11y/tabindex-no-positive': 'error',
-				
+
 				// SonarJS plugin rules - Code smells and cognitive complexity
 				'sonarjs/cognitive-complexity': ['error', 15], // More sophisticated than cyclomatic
 				'sonarjs/no-identical-expressions': 'error',
@@ -683,7 +682,7 @@ export default function ({
 				'sonarjs/no-redundant-jump': 'error',
 				'sonarjs/no-same-line-conditional': 'error',
 				'sonarjs/non-existent-operator': 'error',
-				
+
 				// Unicorn plugin rules - Modern JavaScript best practices
 				'unicorn/better-regex': 'error',
 				'unicorn/catch-error-name': 'error',
@@ -694,7 +693,7 @@ export default function ({
 				'unicorn/escape-case': 'error',
 				'unicorn/expiring-todo-comments': 'error',
 				'unicorn/explicit-length-check': 'error',
-				'unicorn/filename-case': ['warn', { 
+				'unicorn/filename-case': ['warn', {
 					cases: {
 						camelCase: true, // For folders: userAuth, licenseActivation
 						pascalCase: true, // For class files: UserService.ts
@@ -802,7 +801,7 @@ export default function ({
 				'unicorn/template-indent': 'warn',
 				'unicorn/text-encoding-identifier-case': 'error',
 				'unicorn/throw-new-error': 'error',
-				
+
 				// No Secrets plugin rules - Prevent secrets in code
 				'no-secrets/no-secrets': ['error', {
 					tolerance: 4.2,
@@ -815,7 +814,7 @@ export default function ({
 						'JWT Token': 'eyJ[a-zA-Z0-9_-]*\\.[a-zA-Z0-9_-]*\\.[a-zA-Z0-9_-]*'
 					}
 				}],
-				
+
 				// RegExp plugin rules - Essential RegExp safety (conservative set for v2.9.0)
 				'regexp/no-control-character': 'error',
 				'regexp/no-empty-character-class': 'error',
@@ -835,7 +834,7 @@ export default function ({
 				'regexp/prefer-plus-quantifier': 'error',
 				'regexp/prefer-star-quantifier': 'error',
 				'regexp/prefer-w': 'error',
-				
+
 				// Functional plugin rules - Pragmatic immutability and functional programming
 				'functional/no-let': 'off', // Disabled - prefer-const rule is smarter and less prone to false positives
 				'functional/prefer-readonly-type': 'off', // Disabled - too aggressive, breaks compilation and practical code patterns
@@ -849,11 +848,11 @@ export default function ({
 				'functional/no-throw-statements': 'off', // Allow throwing errors
 				'functional/no-try-statements': 'off', // Allow try-catch
 				'functional/no-promise-reject': 'off', // Allow promise rejection
-				
+
 				// Custom rules for coding standards compliance
 				'unicorn/prefer-query-selector': 'off', // Allow different DOM query methods
 				'unicorn/prevent-abbreviations': 'off', // Allow abbreviations for domain-specific terms
-				
+
 				...(strict ? {
 					// Standard conventions for services, transformers, and function naming
 					'standard-conventions/service-single-public-method': 'error',
@@ -905,40 +904,7 @@ export default function ({
 							camelCase: true,
 							pascalCase: true
 						}
-					}],
-					// Enforce Type prefix OR Interface suffix strictly
-					// TypeXXX for data types, XXXInterface for class contracts
-					'@typescript-eslint/naming-convention': [
-						'error',
-						{
-							selector: 'interface',
-							format: ['PascalCase'],
-							custom: {
-								regex: '(^Type[A-Z]|Interface$)',
-								match: true
-							}
-						},
-						{
-							selector: 'typeAlias',
-							format: ['PascalCase'],
-							custom: {
-								regex: '^Type[A-Z]',
-								match: true
-							}
-						},
-						{
-							selector: 'class',
-							format: ['PascalCase']
-						},
-						{
-							selector: 'enum',
-							format: ['PascalCase'],
-							custom: {
-								regex: '^Enum[A-Z]',
-								match: true
-							}
-						}
-					]
+					}]
 				} : {}),
 
 				// Allow custom rules to be added
@@ -1000,23 +966,23 @@ export default function ({
 			rules: {
 				// Disable function scoping rule for test helpers
 				'unicorn/consistent-function-scoping': 'off',
-				
+
 				// Allow test URLs and API endpoints without triggering secrets detection
 				'no-secrets/no-secrets': 'off',
-				
+
 				// Allow only universally understood abbreviations
-				'id-length': ['warn', { 
+				'id-length': ['warn', {
 					min: 3,
 					exceptions: ['id', 'fn']
 				}],
-				
+
 				// Disable rules inappropriate for test files
 				'functional/no-loop-statements': 'off',      // Loops are often clearer than functional alternatives in tests
 				'functional/no-let': 'off',                  // Test setup requires mutable variables
 				'functional/immutable-data': 'off',          // Test mocking requires object mutations
 				'security/detect-non-literal-fs-filename': 'off', // Tests legitimately need dynamic file paths
 				'unicorn/prefer-module': 'off',              // Tests may need __dirname for reliable paths
-				
+
 				// Relax complexity rules for test files
 				'max-lines-per-function': ['error', {
 					max: 300,
@@ -1032,7 +998,7 @@ export default function ({
 				'complexity': ['error', 20], // Higher complexity allowed in tests
 				'max-statements': ['error', 40], // More statements allowed in test functions
 				'sonarjs/cognitive-complexity': ['error', 30], // Higher cognitive complexity for tests
-				
+
 				// Keep as warnings - still worth improving when possible
 				'unicorn/no-null': 'off',                    // APIs often use null, but const can be better
 				'sonarjs/no-duplicate-string': 'off',        // Test strings repeat, but constants still help readability
