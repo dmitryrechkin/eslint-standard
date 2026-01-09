@@ -1,17 +1,22 @@
 {
 	"name": "@dmitryrechkin/eslint-standard",
 	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
-	"version": "1.5.11",
+	"version": "1.5.12",
 	"type": "module",
 	"main": "eslint.config.mjs",
+	"types": "./eslint.config.d.ts",
 	"exports": {
-		".": "./eslint.config.mjs"
+		".": {
+			"import": "./eslint.config.mjs",
+			"types": "./eslint.config.d.ts"
+		}
 	},
 	"bin": {
 		"eslint-standard": "./src/cli/index.mjs"
 	},
 	"files": [
 		"eslint.config.mjs",
+		"eslint.config.d.ts",
 		"src/",
 		"README.md",
 		"LICENSE"
