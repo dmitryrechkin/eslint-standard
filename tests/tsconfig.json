@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "commonjs",
+		"lib": ["ES2020"],
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true
+	},
+	"include": [
+		"fixtures/**/*.ts",
+		"strict-test-temp/**/*.ts",
+		"separation-test-temp/**/*.ts",
+		"strict-comprehensive-temp/**/*.ts",
+		"strict-rules-temp/**/*.ts",
+		"*.ts"
+	]
+}

@@ -1,0 +1,78 @@
+{
+	"name": "@dmitryrechkin/eslint-standard",
+	"description": "This package provides a shared ESLint configuration which includes TypeScript support and a set of specific linting rules designed to ensure high-quality and consistent code style across projects.",
+	"version": "1.5.13",
+	"type": "module",
+	"main": "eslint.config.mjs",
+	"types": "./eslint.config.d.ts",
+	"exports": {
+		".": {
+			"import": "./eslint.config.mjs",
+			"types": "./eslint.config.d.ts"
+		}
+	},
+	"bin": {
+		"eslint-standard": "./src/cli/index.mjs"
+	},
+	"files": [
+		"eslint.config.mjs",
+		"eslint.config.d.ts",
+		"src/",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"postinstall": "node src/cli/postinstall.mjs",
+		"package:publish": "npm publish --access public",
+		"test": "node tests/test-all-rules.mjs",
+		"test:all": "node tests/test-all-rules.mjs",
+		"test:formatting": "node tests/test-runner.mjs",
+		"test:simple": "node tests/simple-test.mjs",
+		"test:debug": "node tests/debug-test.mjs",
+		"test:naming": "node tests/test-naming-conventions.mjs",
+		"test:complexity": "node tests/test-complexity-rules.mjs",
+		"test:safety": "node tests/test-safety-rules.mjs",
+		"test:security": "node tests/test-security-rules.mjs",
+		"test:sonarjs": "node tests/test-sonarjs-rules.mjs",
+		"test:unicorn": "node tests/test-unicorn-rules.mjs",
+		"test:spacing": "node tests/test-spacing-rules.mjs",
+		"test:switch-case": "node tests/test-switch-case-simple.mjs",
+		"test:cli": "node tests/test-cli.mjs",
+		"test:install": "node tests/test-install-simulation.mjs",
+		"test:strict": "node tests/test-strict-rules.mjs"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"@stylistic/eslint-plugin": "^5.10.0",
+		"@typescript-eslint/eslint-plugin": "^8.57.1",
+		"@typescript-eslint/parser": "^8.57.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-functional": "^9.0.4",
+		"eslint-plugin-import-x": "^4.16.2",
+		"eslint-plugin-jsdoc": "^62.8.0",
+		"eslint-plugin-jsx-a11y": "^6.10.2",
+		"eslint-plugin-no-secrets": "^2.3.3",
+		"eslint-plugin-perfectionist": "^5.7.0",
+		"eslint-plugin-prettier": "^5.5.5",
+		"eslint-plugin-promise": "^7.2.1",
+		"eslint-plugin-regexp": "^3.1.0",
+		"eslint-plugin-security": "^4.0.0",
+		"eslint-plugin-simple-import-sort": "^12.1.1",
+		"eslint-plugin-sonarjs": "^4.0.2",
+		"eslint-plugin-unicorn": "^63.0.0",
+		"eslint-plugin-unused-imports": "^4.4.1",
+		"prettier-plugin-astro": "^0.14.1",
+		"prettier-plugin-brace-style": "^0.10.0",
+		"prettier-plugin-merge": "^0.10.0"
+	},
+	"peerDependencies": {
+		"eslint": "^9.0.0 || ^10.0.0",
+		"prettier": "^3.0.0",
+		"typescript": "^5.0.0"
+	},
+	"devDependencies": {
+		"eslint": "^10.1.0"
+	}
+}

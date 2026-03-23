@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"strict": true,
+		"skipLibCheck": true,
+		"lib": [
+			"ESNext"
+		]
+	},
+	"include": [
+		"src/**/*.ts",
+		"tests/**/*.ts",
+		"test-formatting.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
