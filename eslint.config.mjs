@@ -8,6 +8,7 @@
 // import prettierPlugin from "eslint-plugin-prettier";
 // 
 // export default eslintConfig({ prettierPlugin });
+import { createRequire } from 'module';
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import unusedImportsPlugin from 'eslint-plugin-unused-imports';
@@ -19,7 +20,6 @@ import jsdocIndentPlugin from './src/plugins/jsdoc-indent.mjs';
 import interfaceBracePlugin from './src/plugins/interface-brace.mjs';
 import switchCaseBracePlugin from './src/plugins/switch-case-brace.mjs';
 import securityPlugin from 'eslint-plugin-security';
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import promisePlugin from 'eslint-plugin-promise';
 import importPlugin from 'eslint-plugin-import-x';
 import sonarjsPlugin from 'eslint-plugin-sonarjs';
@@ -32,6 +32,51 @@ import standardConventionsPlugin from './src/plugins/standard-conventions.mjs';
 import prettierConfig from 'eslint-config-prettier';
 // eslint-disable-next-line import-x/no-extraneous-dependencies
 import prettierPlugin from 'eslint-plugin-prettier';
+
+// jsx-a11y is an OPTIONAL peer dependency (only needed for React/JSX projects).
+// Load it synchronously via require() so non-React repos don't pull in its dep chain
+// (jsx-a11y -> minimatch@3 -> brace-expansion@1.x, GHSA-mh99). When not installed,
+// it is skipped cleanly. Sync load keeps the config synchronous (no async/await).
+const requireFromEsm = createRequire(import.meta.url);
+let jsxA11yPlugin = null;
+try {
+	const jsxA11yModule = requireFromEsm('eslint-plugin-jsx-a11y');
+	jsxA11yPlugin = jsxA11yModule.default ?? jsxA11yModule;
+} catch {
+	jsxA11yPlugin = null; // not installed — skip (optional peer)
+}
+
+// jsx-a11y rules are registered ONLY when the plugin is installed, otherwise eslint
+// errors ("rule ... refers to unregistered plugin"). Relocated unchanged from below.
+const jsxA11yRules = jsxA11yPlugin !== null ? {
+	'jsx-a11y/alt-text': 'error',
+	'jsx-a11y/anchor-has-content': 'error',
+	'jsx-a11y/anchor-is-valid': 'error',
+	'jsx-a11y/aria-props': 'error',
+	'jsx-a11y/aria-role': 'error',
+	'jsx-a11y/aria-unsupported-elements': 'error',
+	'jsx-a11y/click-events-have-key-events': 'warn',
+	'jsx-a11y/heading-has-content': 'error',
+	'jsx-a11y/html-has-lang': 'error',
+	'jsx-a11y/iframe-has-title': 'error',
+	'jsx-a11y/img-redundant-alt': 'error',
+	'jsx-a11y/interactive-supports-focus': 'error',
+	'jsx-a11y/label-has-associated-control': 'error',
+	'jsx-a11y/media-has-caption': 'warn',
+	'jsx-a11y/mouse-events-have-key-events': 'warn',
+	'jsx-a11y/no-access-key': 'error',
+	'jsx-a11y/no-autofocus': 'warn',
+	'jsx-a11y/no-distracting-elements': 'error',
+	'jsx-a11y/no-interactive-element-to-noninteractive-role': 'error',
+	'jsx-a11y/no-noninteractive-element-interactions': 'warn',
+	'jsx-a11y/no-noninteractive-element-to-interactive-role': 'error',
+	'jsx-a11y/no-redundant-roles': 'error',
+	'jsx-a11y/no-static-element-interactions': 'warn',
+	'jsx-a11y/role-has-required-aria-props': 'error',
+	'jsx-a11y/role-supports-aria-props': 'error',
+	'jsx-a11y/scope': 'error',
+	'jsx-a11y/tabindex-no-positive': 'error',
+} : {};
 
 export default function ({
 	tsconfigPath = './tsconfig.json',
@@ -72,7 +117,7 @@ export default function ({
 				'interface-brace': interfaceBracePlugin,
 				'switch-case-brace': switchCaseBracePlugin,
 				'security': securityPlugin,
-				'jsx-a11y': jsxA11yPlugin,
+				...(jsxA11yPlugin !== null ? { 'jsx-a11y': jsxA11yPlugin } : {}),
 				'promise': promisePlugin,
 				'import-x': importPlugin,
 				'sonarjs': sonarjsPlugin,
@@ -634,34 +679,8 @@ export default function ({
 				'import-x/dynamic-import-chunkname': 'off',
 				'import-x/order': 'off', // Disabled - conflicts with simple-import-sort plugin
 
-				// JSX A11y plugin rules (only active for React/JSX files)
-				'jsx-a11y/alt-text': 'error',
-				'jsx-a11y/anchor-has-content': 'error',
-				'jsx-a11y/anchor-is-valid': 'error',
-				'jsx-a11y/aria-props': 'error',
-				'jsx-a11y/aria-role': 'error',
-				'jsx-a11y/aria-unsupported-elements': 'error',
-				'jsx-a11y/click-events-have-key-events': 'warn',
-				'jsx-a11y/heading-has-content': 'error',
-				'jsx-a11y/html-has-lang': 'error',
-				'jsx-a11y/iframe-has-title': 'error',
-				'jsx-a11y/img-redundant-alt': 'error',
-				'jsx-a11y/interactive-supports-focus': 'error',
-				'jsx-a11y/label-has-associated-control': 'error',
-				'jsx-a11y/media-has-caption': 'warn',
-				'jsx-a11y/mouse-events-have-key-events': 'warn',
-				'jsx-a11y/no-access-key': 'error',
-				'jsx-a11y/no-autofocus': 'warn',
-				'jsx-a11y/no-distracting-elements': 'error',
-				'jsx-a11y/no-interactive-element-to-noninteractive-role': 'error',
-				'jsx-a11y/no-noninteractive-element-interactions': 'warn',
-				'jsx-a11y/no-noninteractive-element-to-interactive-role': 'error',
-				'jsx-a11y/no-redundant-roles': 'error',
-				'jsx-a11y/no-static-element-interactions': 'warn',
-				'jsx-a11y/role-has-required-aria-props': 'error',
-				'jsx-a11y/role-supports-aria-props': 'error',
-				'jsx-a11y/scope': 'error',
-				'jsx-a11y/tabindex-no-positive': 'error',
+				// JSX A11y plugin rules — conditional spread (only registered when jsx-a11y is installed)
+				...jsxA11yRules,
 
 				// SonarJS plugin rules - Code smells and cognitive complexity
 				'sonarjs/cognitive-complexity': ['error', 15], // More sophisticated than cyclomatic
